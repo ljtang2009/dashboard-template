@@ -1,5 +1,6 @@
 {
-  "primaryColorId": "002",
+  "primaryColorId": "010",
   "isCustomPrimaryColor": false,
-  "customPrimaryColor": "#FF5C93"
+  "customPrimaryColor": "#FF69B4",
+  "languageId": "002"
 }

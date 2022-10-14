@@ -3,7 +3,7 @@ import { ref, computed } from 'vue';
 import primaryColors from '@/config/primaryColors';
 import appConfig from '@/config/app.json';
 
-export default defineStore('theme', () => {
+export default defineStore('primaryColor', () => {
   const primaryColorId = ref<string>(appConfig.primaryColorId);
   const isCustomPrimaryColor = ref<boolean>(appConfig.isCustomPrimaryColor);
   const customPrimaryColor = ref<string>(appConfig.customPrimaryColor);

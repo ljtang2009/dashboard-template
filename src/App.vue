@@ -3,7 +3,7 @@
     <router-view />
     <app-config />
   </a-config-provider> -->
-  <n-config-provider :theme-overrides="themeOverrides" :locale="locale" :date-locale="dateLocale">
+  <n-config-provider :theme-overrides="themeOverrides" :locale="language.locale" :date-locale="language.dateLocale">
     <n-message-provider>
       <app-config v-if="!isProd" />
       <div>
@@ -19,9 +19,10 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import AppConfig from '@/components/AppConfig/AppConfig.vue';
-import { zhCN, dateZhCN } from 'naive-ui';
+// import { zhCN, dateZhCN } from 'naive-ui';
 import { lighten } from '@/utils/color';
-import useThemeStore from '@/store/theme'
+import usePrimaryColorStore from '@/store/appConfig/primaryColor'
+import useLanguageStore from '@/store/appConfig/language'
 
 export default defineComponent({
   components: {
@@ -29,10 +30,11 @@ export default defineComponent({
   },
   setup() {
     const isProd = process.env['NODE_ENV'] === 'production'
-    const themeStore = useThemeStore()
+
+    const primaryColorStore = usePrimaryColorStore()
 
     const themeOverrides = computed(() => {
-      const primaryColor = themeStore.primaryColor
+      const primaryColor = primaryColorStore.primaryColor
       const lightenColor = lighten(primaryColor, 6)
       return {
         common: {
@@ -45,14 +47,14 @@ export default defineComponent({
       }
     })
 
-    const strong = true
+    const languageStore = useLanguageStore()
+
+    const language = computed(() => languageStore.language)
 
     return {
+      isProd,
       themeOverrides,
-      strong,
-      locale: zhCN,
-      dateLocale: dateZhCN,
-      isProd
+      language
     }
   },
 })

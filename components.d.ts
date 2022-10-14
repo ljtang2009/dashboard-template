@@ -8,22 +8,26 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppConfig: typeof import('./src/components/AppConfig/AppConfig.vue')['default']
+    ConfigItem: typeof import('./src/components/AppConfig/ConfigItem.vue')['default']
     DragHandle: typeof import('./src/components/AppConfig/DragHandle.vue')['default']
+    LanguageSelector: typeof import('./src/components/AppConfig/LanguageSelector.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NColorPicker: typeof import('naive-ui')['NColorPicker']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
+    NDivider: typeof import('naive-ui')['NDivider']
     NDrawer: typeof import('naive-ui')['NDrawer']
     NDrawerContent: typeof import('naive-ui')['NDrawerContent']
     NGlobalStyle: typeof import('naive-ui')['NGlobalStyle']
     NIcon: typeof import('naive-ui')['NIcon']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NPopover: typeof import('naive-ui')['NPopover']
+    NSelect: typeof import('naive-ui')['NSelect']
     NSpace: typeof import('naive-ui')['NSpace']
     NTag: typeof import('naive-ui')['NTag']
     NText: typeof import('naive-ui')['NText']
+    PrimaryColorSelector: typeof import('./src/components/AppConfig/PrimaryColorSelector.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SelectLang: typeof import('./src/components/SelectLang.vue')['default']
-    ThemeColorSelector: typeof import('./src/components/AppConfig/ThemeColorSelector.vue')['default']
   }
 }

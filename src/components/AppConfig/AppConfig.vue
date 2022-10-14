@@ -12,7 +12,9 @@
             <n-button @click="visible = false">关闭</n-button>
           </n-space>
         </template>
-        <theme-color-selector />
+        <primary-color-selector ref="primary-color-selector-component" />
+        <n-divider />
+        <language-selector ref="language-selector-component" />
       </n-drawer-content>
     </n-drawer>
   </div>
@@ -20,16 +22,17 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import DragHandle from '@/components/AppConfig/DragHandle.vue'
-import ThemeColorSelector from '@/components/AppConfig/ThemeColorSelector.vue'
 import { save as saveAppConfig } from '@/api/dev/appConfig'
-import useThemeStore from '@/store/theme'
 import { useMessage } from 'naive-ui'
+import PrimaryColorSelector from '@/components/AppConfig/PrimaryColorSelector.vue'
+import LanguageSelector from '@/components/AppConfig/LanguageSelector.vue'
 
 export default defineComponent({
   name: 'AppConfig',
   components: {
     DragHandle,
-    ThemeColorSelector
+    PrimaryColorSelector,
+    LanguageSelector
   },
   setup() {
     const message = useMessage()
@@ -38,14 +41,15 @@ export default defineComponent({
 
     const isSaving = ref(false)
 
+    const primaryColorSelectorComponent = ref(PrimaryColorSelector);
+    const languageSelectorComponent = ref(LanguageSelector);
+
     async function save() {
       isSaving.value = true
-      const themeStore = useThemeStore()
       try {
         await saveAppConfig({
-          primaryColorId: themeStore.primaryColorId,
-          isCustomPrimaryColor: themeStore.isCustomPrimaryColor,
-          customPrimaryColor: themeStore.customPrimaryColor
+          ...(primaryColorSelectorComponent.value && primaryColorSelectorComponent.value['getConfig']()),
+          ...(languageSelectorComponent.value && languageSelectorComponent.value['getConfig']())
         })
       }
       catch (e) {
@@ -60,7 +64,9 @@ export default defineComponent({
     return {
       visible,
       isSaving,
-      save
+      save,
+      'primary-color-selector-component': primaryColorSelectorComponent,
+      'language-selector-component': languageSelectorComponent
     }
   }
 })
