@@ -8,8 +8,8 @@
         </template>
         <template #footer>
           <n-space>
-            <n-button type="primary" :loading="isSaving" @click="save">保存</n-button>
-            <n-button @click="visible = false">关闭</n-button>
+            <n-button type="primary" :loading="isSaving" @click="save">{{$t('appConfig.save')}}</n-button>
+            <n-button @click="visible = false">{{$t('appConfig.close')}}</n-button>
           </n-space>
         </template>
         <primary-color-selector ref="primary-color-selector-component" />
@@ -26,6 +26,8 @@ import { save as saveAppConfig } from '@/api/dev/appConfig'
 import { useMessage } from 'naive-ui'
 import PrimaryColorSelector from '@/components/AppConfig/PrimaryColorSelector.vue'
 import LanguageSelector from '@/components/AppConfig/LanguageSelector.vue'
+import { useI18n } from 'vue-i18n'
+
 
 export default defineComponent({
   name: 'AppConfig',
@@ -36,9 +38,9 @@ export default defineComponent({
   },
   setup() {
     const message = useMessage()
+    const { t } = useI18n()
 
     const visible = ref(false)
-
     const isSaving = ref(false)
 
     const primaryColorSelectorComponent = ref(PrimaryColorSelector);
@@ -58,7 +60,7 @@ export default defineComponent({
       finally {
         isSaving.value = false
       }
-      message.success('保存成功')
+      message.success(t('appConfig.callback.saveSuccessfully'))
     }
 
     return {

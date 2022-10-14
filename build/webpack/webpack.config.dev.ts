@@ -15,7 +15,7 @@ const config: Configuration = merge(webpackBaseConfig, {
     }),
     new WatchIgnorePlugin({
       // 排除配置文件，因为配置文件会被改变，从而误刷新页面
-      paths: [path.resolve(__dirname, '../../src/config/app.json')],
+      paths: [path.resolve(__dirname, '../../src/config/appConfig.json')],
     }),
   ],
   stats: {

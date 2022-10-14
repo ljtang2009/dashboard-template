@@ -1,6 +1,6 @@
 <template>
   <config-item>
-    <template #title>主题色</template>
+    <template #title>{{$t('appConfig.modules.primaryColor.title')}}</template>
     <template #content>
       <n-space vertical>
         <div>
@@ -24,7 +24,7 @@
             :modes="['hex', 'rgb', 'hsl', 'hsv']" @confirm="selectCustomColor">
             <template #label>
               <n-space size="small">
-                <span style="color: #ffffff">自选</span>
+                <span style="color: #ffffff">{{$t('appConfig.modules.primaryColor.Manual')}}</span>
                 <n-icon v-if="isCustomPrimaryColor" size="14" color="#ffffff">
                   <check-twotone />
                 </n-icon>

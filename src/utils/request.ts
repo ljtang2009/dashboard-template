@@ -48,7 +48,7 @@ export function request(params: requestParams) {
     instance
       .request(axiosParams)
       .then((response) => {
-        resolve(response);
+        resolve(response.data);
       })
       .catch((error) => {
         reject(error);

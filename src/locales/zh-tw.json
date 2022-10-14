@@ -1,0 +1,23 @@
+{
+  "common": {
+    "save": "保存",
+    "close": "關閉",
+    "successfully": "成功"
+  },
+  "appConfig": {
+    "save": "@:common.save",
+    "close": "@:common.close",
+    "callback": {
+      "saveSuccessfully": "@:common.save@:common.successfully"
+    },
+    "modules": {
+      "primaryColor": {
+        "title": "主色",
+        "Manual": "自選"
+      },
+      "language": {
+        "title": "語言"
+      }
+    }
+  }
+}

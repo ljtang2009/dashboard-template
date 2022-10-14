@@ -1,0 +1,23 @@
+{
+  "common": {
+    "save": "save",
+    "close": "close",
+    "successfully": "successfully"
+  },
+  "appConfig": {
+    "save": "@.upper:common.save",
+    "close": "@.upper:common.close",
+    "callback": {
+      "saveSuccessfully": "@.capitalize:common.save @.capitalize:common.successfully ."
+    },
+    "modules": {
+      "primaryColor": {
+        "title": "Primary Color",
+        "Manual": "MANUAL"
+      },
+      "language": {
+        "title": "Language"
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 <template>
   <config-item>
-    <template #title>语言</template>
+    <template #title>{{$t('appConfig.modules.language.title')}}</template>
     <template #content>
       <n-select v-model:value="currentLanguageId" :options="options" @update:value="update" />
     </template>
@@ -21,9 +21,7 @@ export default defineComponent({
     const languageStore = useLanguageStore()
     const currentLanguageId = ref<string>(languageStore.languageId)
 
-    const options = languages.map(item => { return { label: item.name, value: item.id } })
-
-    const update = (value: string) => {
+    const update = async (value: string) => {
       languageStore.$patch((state) => {
         state.languageId = value
       })
@@ -37,7 +35,7 @@ export default defineComponent({
 
     return {
       currentLanguageId,
-      options,
+      options: languages.map(item => { return { label: item.name, value: item.id } }),
       update,
       getConfig
     }

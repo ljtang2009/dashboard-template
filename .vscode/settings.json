@@ -5,13 +5,7 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "vue",
-    "typescript",
-    "typescriptreact"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "vue", "typescript", "typescriptreact"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
@@ -24,5 +18,11 @@
   },
   "files.exclude": {
     ".history": true
-  }
+  },
+  "i18n-ally.localesPaths": ["src/locales"],
+  "i18n-ally.sortKeys": false,
+  "i18n-ally.keepFulfilled": true,
+  "i18n-ally.editor.preferEditor": true,
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.sourceLanguage": "zh-tw"
 }

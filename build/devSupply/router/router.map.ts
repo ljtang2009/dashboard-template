@@ -1,4 +1,5 @@
-import saveAppConfig from '../module/saveAppConfig';
+// import saveAppConfig from '../module/saveAppConfig';
+import { save as saveAppConfig, read as readAppConfig } from '../module/appConfig';
 import { Request, Response, NextFunction } from 'express';
 
 export interface mapItem {
@@ -11,6 +12,11 @@ const routers: Array<mapItem> = [
   {
     url: `/saveAppConfig`,
     module: saveAppConfig,
+  },
+  {
+    url: `/readAppConfig`,
+    module: readAppConfig,
+    method: 'get',
   },
 ];
 
