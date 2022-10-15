@@ -8,20 +8,24 @@ import { darkTheme, lightTheme, useOsTheme } from 'naive-ui';
 
 export function getThemeOverrides() {
   const primaryColorStore = usePrimaryColorStore();
-
-  const primaryColor = primaryColorStore.primaryColor;
-  const lightenColor = lighten(primaryColor, 6);
-  return {
+  const result: Record<string, any> = {
     common: {
       fontWeightStrong: '600',
-      primaryColor: primaryColor,
-      primaryColorHover: lightenColor,
-      primaryColorPressed: lightenColor,
-    },
-    LoadingBar: {
-      colorLoading: primaryColor,
     },
   };
+  const primaryColor = primaryColorStore.primaryColor;
+  const originalPrimaryColor = '#18a058';
+  // 如果和原生色相同,则不改主色
+  if (primaryColor !== originalPrimaryColor) {
+    const lightenColor = lighten(primaryColor, 6);
+    result['common'].primaryColor = primaryColor;
+    result['common'].primaryColorHover = lightenColor;
+    result['common'].primaryColorPressed = lightenColor;
+    result['LoadingBar'] = {
+      colorLoading: primaryColor,
+    };
+  }
+  return result;
 }
 
 function getThemeUI(themeId: string | null) {

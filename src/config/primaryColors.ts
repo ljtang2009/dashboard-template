@@ -22,8 +22,8 @@ export default [
   },
   {
     id: '004',
-    name: '极光绿',
-    color: '#52C41A',
+    name: '荷叶',
+    color: '#18a058',
   },
   {
     id: '005',
