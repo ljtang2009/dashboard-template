@@ -3,9 +3,12 @@
     "save": "save",
     "close": "close",
     "successfully": "successfully",
-    "reset": "reset"
+    "reset": "reset",
+    "system": "system",
+    "config": "config"
   },
   "appConfig": {
+    "systemConfig": "@.capitalize:common.system @.capitalize:common.config",
     "save": "@.upper:common.save",
     "reset": "@.upper:common.reset",
     "close": "@.upper:common.close",

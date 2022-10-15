@@ -1,18 +1,10 @@
 <template>
-  <!-- <a-config-provider :locale="locale">
-    <router-view />
-    <app-config />
-  </a-config-provider> -->
   <n-config-provider :theme-overrides="themeOverrides" :theme="theme" :locale="language.locale"
     :date-locale="language.dateLocale">
     <n-loading-bar-provider>
       <n-message-provider>
         <app-config v-if="!isProd" />
-        <div>
-          <n-button type="primary">
-            primary
-          </n-button>
-        </div>
+        <router-view />
       </n-message-provider>
     </n-loading-bar-provider>
     <n-global-style />

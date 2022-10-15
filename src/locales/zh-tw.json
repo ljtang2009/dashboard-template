@@ -3,9 +3,12 @@
     "save": "保存",
     "close": "關閉",
     "successfully": "成功",
-    "reset": "重置"
+    "reset": "重置",
+    "system": "系統",
+    "config": "配置"
   },
   "appConfig": {
+    "systemConfig": "@:common.system@:common.config",
     "save": "@:common.save",
     "reset": "@:common.reset",
     "close": "@:common.close",

@@ -3,12 +3,10 @@ import App from '@/App.vue';
 import { createPinia } from 'pinia';
 import { setupI18n } from '@/i18n';
 import { read as readAppConfig } from '@/api/dev/appConfig';
+import router from '@/router';
+import '@/style/global.less';
 
 const isProd = process.env['NODE_ENV'] === 'production';
-
-// import router from '@/router';
-
-import '@/style/global.less';
 
 async function init() {
   if (!isProd) {
@@ -20,8 +18,7 @@ async function init() {
   app.use(pinia);
   const i18n = await setupI18n();
   app.use(i18n);
-
-  // app.use(router);
+  app.use(router);
 
   app.mount('#app');
 }

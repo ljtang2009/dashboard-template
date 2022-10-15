@@ -3,9 +3,7 @@
     <drag-handle @tap="visible = !visible" />
     <n-drawer v-model:show="visible" display-directive="show">
       <n-drawer-content>
-        <template #header>
-          Header
-        </template>
+        <template #header>{{$t('appConfig.systemConfig')}}</template>
         <template #footer>
           <n-space size="small">
             <n-button size="small" type="primary" :loading="isSaving" @click="save">{{$t('appConfig.save')}}</n-button>
