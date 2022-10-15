@@ -5,18 +5,13 @@
       <n-space vertical>
         <div>
           <n-space size="small">
-            <n-popover v-for="(item, index) in primaryColors" :key="index">
-              <template #trigger>
-                <n-tag size="small" :bordered="false" :color="{color: item.color}" class="tappable"
-                  @click="selectSwatch(item)">
-                  <n-icon size="14" color="#ffffff"
-                    :style="{visibility: !isCustomPrimaryColor && primaryColorId === item.id ? 'visible' : 'hidden'}">
-                    <check-twotone />
-                  </n-icon>
-                </n-tag>
-              </template>
-              {{item.name}}
-            </n-popover>
+            <n-tag v-for="(item, index) in primaryColors" :key="index" size="small" :bordered="false"
+              :color="{color: item.color}" class="tappable" @click="selectSwatch(item)">
+              <n-icon size="14" color="#ffffff"
+                :style="{visibility: !isCustomPrimaryColor && primaryColorId === item.id ? 'visible' : 'hidden'}">
+                <check-twotone />
+              </n-icon>
+            </n-tag>
           </n-space>
         </div>
         <div>
