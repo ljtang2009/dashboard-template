@@ -1,14 +1,27 @@
 <template>
   <config-item>
-    <template #title>主题</template>
+    <template #title>{{$t('appConfig.modules.theme.title')}}</template>
     <template #content>
-
+      <n-switch v-model:value="isDark" :rail-style="railStyle" @update:value="update">
+        <template #checked>{{$t('appConfig.modules.theme.light')}}</template>
+        <template #unchecked>{{$t('appConfig.modules.theme.dark')}}</template>
+        <template #checked-icon>
+          <n-icon :component="LightModeFilled" color="#F4A460" />
+        </template>
+        <template #unchecked-icon>
+          <n-icon :component="ModeNightRound" color="#F4A460" />
+        </template>
+      </n-switch>
     </template>
   </config-item>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref, CSSProperties } from 'vue';
 import ConfigItem from '@/components/AppConfig/ConfigItem.vue'
+import useThemeStore from '@/store/appConfig/theme'
+import ThemeType from '@/config/theme';
+import appConfigDefault from '@/config/appConfigDefault.json'
+import { LightModeFilled, ModeNightRound } from '@vicons/material'
 
 export default defineComponent({
   name: 'ThemeSelector',
@@ -16,18 +29,45 @@ export default defineComponent({
     ConfigItem,
   },
   setup() {
+    const themeStore = useThemeStore()
+    const isDark = ref<boolean>(themeStore.isDark)
+
+    const update = (value: boolean) => {
+      themeStore.$patch((state) => {
+        state.themeId = value ? ThemeType.dark : ThemeType.light
+      })
+    }
+
+    const railStyle = (_info: {
+      focused: boolean
+      checked: boolean
+    }) => {
+      const style: CSSProperties = {}
+      style.backgroundColor = '#003366'
+      return style
+    }
+
     const getConfig = () => {
       return {
+        themeId: themeStore.themeId
       }
     }
 
     const reset = () => {
-
+      themeStore.$patch((state) => {
+        state.themeId = appConfigDefault.themeId
+      })
+      isDark.value = themeStore.isDark
     }
 
     return {
+      isDark,
+      railStyle,
+      LightModeFilled,
+      ModeNightRound,
+      update,
       getConfig,
-      reset
+      reset,
     }
   }
 })

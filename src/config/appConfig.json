@@ -1,7 +1,7 @@
 {
-  "primaryColorId": "007",
+  "primaryColorId": "005",
   "isCustomPrimaryColor": false,
   "customPrimaryColor": "#FF69B4",
   "languageId": "001",
-  "themeId": "light"
+  "themeId": "os"
 }

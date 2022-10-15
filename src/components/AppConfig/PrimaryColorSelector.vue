@@ -12,20 +12,20 @@
                 <check-twotone />
               </n-icon>
             </n-tag>
+            <div style="width: 100px;">
+              <n-color-picker v-model:value="customPrimaryColor" :show-alpha="false" size="small" :actions="['confirm']"
+                :modes="['hex', 'rgb', 'hsl', 'hsv']" @confirm="selectCustomColor">
+                <template #label>
+                  <n-space size="small">
+                    <span style="color: #ffffff">{{$t('appConfig.modules.primaryColor.Manual')}}</span>
+                    <n-icon v-if="isCustomPrimaryColor" size="14" color="#ffffff">
+                      <check-twotone />
+                    </n-icon>
+                  </n-space>
+                </template>
+              </n-color-picker>
+            </div>
           </n-space>
-        </div>
-        <div>
-          <n-color-picker v-model:value="customPrimaryColor" :show-alpha="false" size="small" :actions="['confirm']"
-            :modes="['hex', 'rgb', 'hsl', 'hsv']" @confirm="selectCustomColor">
-            <template #label>
-              <n-space size="small">
-                <span style="color: #ffffff">{{$t('appConfig.modules.primaryColor.Manual')}}</span>
-                <n-icon v-if="isCustomPrimaryColor" size="14" color="#ffffff">
-                  <check-twotone />
-                </n-icon>
-              </n-space>
-            </template>
-          </n-color-picker>
         </div>
       </n-space>
     </template>

@@ -19,6 +19,11 @@
       },
       "language": {
         "title": "Language"
+      },
+      "theme": {
+        "title": "Theme",
+        "light": "LIGHT",
+        "dark": "DARK"
       }
     }
   }

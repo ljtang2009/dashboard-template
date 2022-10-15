@@ -3,7 +3,8 @@
     <router-view />
     <app-config />
   </a-config-provider> -->
-  <n-config-provider :theme-overrides="themeOverrides" :locale="language.locale" :date-locale="language.dateLocale">
+  <n-config-provider :theme-overrides="themeOverrides" :theme="theme" :locale="language.locale"
+    :date-locale="language.dateLocale">
     <n-loading-bar-provider>
       <n-message-provider>
         <app-config v-if="!isProd" />
@@ -23,7 +24,7 @@ import { defineComponent, computed } from 'vue';
 import AppConfig from '@/components/AppConfig/AppConfig.vue';
 import useLanguageStore from '@/store/appConfig/language'
 import { setI18nLanguage } from '@/i18n'
-import { getThemeOverrides } from '@/utils/themeConfigProvider';
+import { getThemeOverrides, getTheme } from '@/utils/themeConfigProvider';
 
 export default defineComponent({
   components: {
@@ -33,6 +34,8 @@ export default defineComponent({
     const isProd = process.env['NODE_ENV'] === 'production'
 
     const themeOverrides = computed(getThemeOverrides)
+
+    const theme = computed(getTheme)
 
     const languageStore = useLanguageStore()
 
@@ -45,6 +48,7 @@ export default defineComponent({
     return {
       isProd,
       themeOverrides,
+      theme,
       language
     }
   },

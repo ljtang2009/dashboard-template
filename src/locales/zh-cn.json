@@ -19,6 +19,11 @@
       },
       "language": {
         "title": "语言"
+      },
+      "theme": {
+        "title": "主题",
+        "light": "亮",
+        "dark": "暗"
       }
     }
   }
