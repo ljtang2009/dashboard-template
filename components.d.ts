@@ -29,5 +29,6 @@ declare module '@vue/runtime-core' {
     PrimaryColorSelector: typeof import('./src/components/AppConfig/PrimaryColorSelector.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ThemeSelector: typeof import('./src/components/AppConfig/ThemeSelector.vue')['default']
   }
 }

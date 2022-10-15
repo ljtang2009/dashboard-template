@@ -2,10 +2,12 @@
   "common": {
     "save": "保存",
     "close": "關閉",
-    "successfully": "成功"
+    "successfully": "成功",
+    "reset": "重置"
   },
   "appConfig": {
     "save": "@:common.save",
+    "reset": "@:common.reset",
     "close": "@:common.close",
     "callback": {
       "saveSuccessfully": "@:common.save@:common.successfully"

@@ -11,6 +11,7 @@ import { defineComponent, ref } from 'vue';
 import ConfigItem from '@/components/AppConfig/ConfigItem.vue'
 import languages from '@/config/languages'
 import useLanguageStore from '@/store/appConfig/language'
+import appConfigDefault from '@/config/appConfigDefault.json'
 
 export default defineComponent({
   name: 'LanguageSelector',
@@ -33,11 +34,17 @@ export default defineComponent({
       }
     }
 
+    const reset = () => {
+      currentLanguageId.value = appConfigDefault.languageId
+      update(currentLanguageId.value)
+    }
+
     return {
       currentLanguageId,
       options: languages.map(item => { return { label: item.name, value: item.id } }),
       update,
-      getConfig
+      getConfig,
+      reset
     }
   }
 })

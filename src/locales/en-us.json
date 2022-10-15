@@ -2,10 +2,12 @@
   "common": {
     "save": "save",
     "close": "close",
-    "successfully": "successfully"
+    "successfully": "successfully",
+    "reset": "reset"
   },
   "appConfig": {
     "save": "@.upper:common.save",
+    "reset": "@.upper:common.reset",
     "close": "@.upper:common.close",
     "callback": {
       "saveSuccessfully": "@.capitalize:common.save @.capitalize:common.successfully ."

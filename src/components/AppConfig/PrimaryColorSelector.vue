@@ -38,6 +38,7 @@ import ConfigItem from '@/components/AppConfig/ConfigItem.vue'
 import { CheckTwotone } from '@vicons/material'
 import primaryColors, { colorType as primaryColorType } from '@/config/primaryColors'
 import usePrimaryColorStore from '@/store/appConfig/primaryColor'
+import appConfigDefault from '@/config/appConfigDefault.json'
 
 export default defineComponent({
   name: 'PrimaryColorSelector',
@@ -78,6 +79,17 @@ export default defineComponent({
       }
     }
 
+    const reset = () => {
+      primaryColorId.value = appConfigDefault.primaryColorId
+      isCustomPrimaryColor.value = appConfigDefault.isCustomPrimaryColor
+      customPrimaryColor.value = appConfigDefault.customPrimaryColor
+      primaryColorStore.$patch((state) => {
+        state.primaryColorId = primaryColorId.value
+        state.isCustomPrimaryColor = isCustomPrimaryColor.value
+        state.customPrimaryColor = customPrimaryColor.value
+      })
+    }
+
     return {
       primaryColors,
       primaryColorId,
@@ -85,7 +97,8 @@ export default defineComponent({
       customPrimaryColor,
       selectSwatch,
       selectCustomColor,
-      getConfig
+      getConfig,
+      reset
     }
   }
 })

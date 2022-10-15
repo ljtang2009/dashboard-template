@@ -7,7 +7,7 @@ export default defineStore('primaryColor', () => {
   const appConfig = getAppConfig();
   const primaryColorId = ref<string>(appConfig['primaryColorId']);
   const isCustomPrimaryColor = ref<boolean>(appConfig['isCustomPrimaryColor']);
-  const customPrimaryColor = ref<string>(appConfig['customPrimaryColors']);
+  const customPrimaryColor = ref<string>(appConfig['customPrimaryColor']);
 
   const primaryColor = computed(() => {
     let result = '';
