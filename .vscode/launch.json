@@ -13,9 +13,8 @@
       "args": ["build/devSupply/dev.supply.debug.ts"],
       "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal"
     }
   ]
 }

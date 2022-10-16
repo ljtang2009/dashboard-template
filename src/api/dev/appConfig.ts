@@ -1,8 +1,12 @@
 import { request } from '@/utils/request';
+import { urlPrefix } from '@/api/dev/config';
 
-const urlPrefix = '/dev';
-const saveUrl = urlPrefix + '/saveAppConfig';
-const readUrl = urlPrefix + '/readAppConfig';
+const moduleName = '/appConfig';
+function getUrl(value: string): string {
+  return `${urlPrefix}${moduleName}${value}`;
+}
+const saveUrl = getUrl('/save');
+const readUrl = getUrl('/read');
 
 /**
  * 保存配置

@@ -8,7 +8,21 @@
             @update:value="updateProductName" />
         </n-form-item>
         <n-form-item label="商标">
-          <n-input v-model:value="model.productName" size="small" type="text" clearable />
+          <n-upload v-model:file-list="logoList" :accept="logoAcceptTypes.join(',')" :max="1" action="/dev/logo/save"
+            :list-type="logoUploadListType" @before-upload="beforeUploadLogo" @preview="handlePreviewLogo"
+            @change="handleLogoChange" @finish="handleLogoFinish">
+            <n-upload-dragger>
+              <div>
+                <n-icon size="32">
+                  <file-upload-filled />
+                </n-icon>
+              </div>
+              <n-text>
+                点击或者拖动文件到该区域来上传
+              </n-text>
+            </n-upload-dragger>
+          </n-upload>
+          <n-image v-show="false" ref="previewLogoImage" :src="previewLogoUrl" />
         </n-form-item>
       </n-form>
     </template>
@@ -20,10 +34,14 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, ComponentPublicInstance } from 'vue';
+import { UploadFileInfo, useMessage } from 'naive-ui'
+import { FileUploadFilled } from '@vicons/material'
+import { reset as resetLogo } from '@/api/dev/logo'
 import useProductStore from '@/store/appConfig/product'
 import appConfigDefault from '@/config/appConfigDefault.json'
 
+const message = useMessage()
 const productStore = useProductStore()
 
 const model = ref({
@@ -36,15 +54,92 @@ const updateProductName = (value: string) => {
   })
 }
 
+const logoUrl = '/dev/logo/get'
+const logoList = ref([
+  {
+    id: 'logo',
+    name: 'logo.png',
+    status: 'finished',
+    url: `${logoUrl}?${(new Date()).valueOf()}`
+  },
+])
+
+const previewLogoUrl = ref('')
+const previewLogoImage = ref<ComponentPublicInstance>()
+
+const logoAcceptTypes = ['image/png']
+const logoMaxSize = 2 // MB
+// 检查文件
+function beforeUploadLogo(data: { file: UploadFileInfo }) {
+  let error
+  if (data.file.type && logoAcceptTypes.indexOf(data.file.type) === -1) {
+    error = '只能上传png格式的图片文件，请重新上传'
+  }
+  const logoMaxSizeByte = logoMaxSize * 1024 * 1024
+  if (!error && data.file.file && data.file.file.size > logoMaxSizeByte) {
+    error = `文件大小不能超过 ${logoMaxSize}MB，请重新上传`
+  }
+  if (error) {
+    message.error(error)
+    return false
+  }
+  return true
+}
+
+// 预览
+function handlePreviewLogo(file: UploadFileInfo) {
+  const { url } = file
+  // 获取预览组件的image元素
+  const imgElement = previewLogoImage.value!.$el.getElementsByTagName('img')[0]
+  if (!imgElement.onload) {
+    imgElement.onload = () => {
+      imgElement.click()
+    }
+  }
+  // 如果预览图片不变
+  if (previewLogoUrl.value === url) {
+    imgElement.click()
+  }
+  else {
+    // 改变预览图片，触发onload
+    previewLogoUrl.value = url as string
+  }
+}
+
+// const logoUploadListType = ref<'text' | 'image-card'>('text')
+const logoUploadListType = ref<'text' | 'image-card'>('image-card')
+// 改变
+function handleLogoChange(data: { fileList: UploadFileInfo[] }) {
+  if (data.fileList.length > 0) {
+    if (logoUploadListType.value !== 'image-card') {
+      logoUploadListType.value = 'image-card'
+    }
+  }
+  else {
+    if (logoUploadListType.value !== 'text') {
+      logoUploadListType.value = 'text'
+    }
+  }
+}
+
+function handleLogoFinish({ file }: { file: UploadFileInfo }) {
+  file.url = `${logoUrl}?${(new Date()).valueOf()}`
+}
+
 const getConfig = () => {
   return {
     productName: model.value.productName
   }
 }
 
-const reset = () => {
+
+const reset = async () => {
   model.value.productName = appConfigDefault.productName
   updateProductName(appConfigDefault.productName)
+  await resetLogo()
+  if (logoList.value.length > 0) {
+    logoList.value[0].url = `${logoUrl}?${(new Date()).valueOf()}`
+  }
 }
 
 defineExpose({

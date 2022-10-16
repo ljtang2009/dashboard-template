@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
+import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import getPort from 'get-port';
 import { devSupplyServerPort } from '../config';
@@ -10,6 +11,8 @@ async function launchServer() {
     port: devSupplyServerPort,
   });
 
+  // 在终端中查看日志
+  app.use(morgan('dev'));
   app.use(bodyParser.json());
 
   applyRouter(app);

@@ -7,7 +7,8 @@
         <template #footer>
           <n-space size="small">
             <n-button size="small" type="primary" :loading="isSaving" @click="save">{{$t('appConfig.save')}}</n-button>
-            <n-button size="small" type="warning" @click="reset">{{$t('appConfig.reset')}}</n-button>
+            <n-button size="small" type="warning" :loading="isDoingReset" @click="reset">{{$t('appConfig.reset')}}
+            </n-button>
             <n-button size="small" @click="visible = false">{{$t('appConfig.close')}}</n-button>
           </n-space>
         </template>
@@ -80,17 +81,29 @@ async function save() {
   message.success(t('appConfig.callback.saveSuccessfully'))
 }
 
+const isDoingReset = ref(false)
+
 // 重置
 function reset() {
+  isDoingReset.value = true
+  const resetFunctionList = []
   for (const component of components.value) {
     const getConfigFunctionName = 'reset'
     if (component && getConfigFunctionName in component) {
       const resetFunction = component[getConfigFunctionName] as Function
       if (resetFunction) {
-        resetFunction()
+        resetFunctionList.push(resetFunction())
       }
     }
   }
-  message.success(t('appConfig.callback.resetSuccessfully'))
+  Promise.all(resetFunctionList).then(() => {
+    message.success(t('appConfig.callback.resetSuccessfully'))
+  })
+    // .catch(error => {
+    //   message.error(error.message)
+    // })
+    .finally(() => {
+      isDoingReset.value = false
+    })
 }
 </script>
