@@ -7,45 +7,40 @@
   </config-item>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+export default {
+  name: 'LanguageSelector'
+}
+</script>
+<script setup lang="ts">
+import { ref } from 'vue';
 import ConfigItem from '@/components/AppConfig/ConfigItem.vue'
 import languages from '@/config/languages'
 import useLanguageStore from '@/store/appConfig/language'
 import appConfigDefault from '@/config/appConfigDefault.json'
 
-export default defineComponent({
-  name: 'LanguageSelector',
-  components: {
-    ConfigItem,
-  },
-  setup() {
-    const languageStore = useLanguageStore()
-    const currentLanguageId = ref<string>(languageStore.languageId)
+const languageStore = useLanguageStore()
+const currentLanguageId = ref<string>(languageStore.languageId)
+const options = languages.map(item => { return { label: item.name, value: item.id } })
 
-    const update = async (value: string) => {
-      languageStore.$patch((state) => {
-        state.languageId = value
-      })
-    }
+const update = async (value: string) => {
+  languageStore.$patch((state) => {
+    state.languageId = value
+  })
+}
 
-    const getConfig = () => {
-      return {
-        languageId: languageStore.languageId,
-      }
-    }
-
-    const reset = () => {
-      currentLanguageId.value = appConfigDefault.languageId
-      update(currentLanguageId.value)
-    }
-
-    return {
-      currentLanguageId,
-      options: languages.map(item => { return { label: item.name, value: item.id } }),
-      update,
-      getConfig,
-      reset
-    }
+const getConfig = () => {
+  return {
+    languageId: languageStore.languageId,
   }
+}
+
+const reset = () => {
+  currentLanguageId.value = appConfigDefault.languageId
+  update(currentLanguageId.value)
+}
+
+defineExpose({
+  getConfig,
+  reset
 })
 </script>

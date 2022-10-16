@@ -3,5 +3,6 @@
   "isCustomPrimaryColor": false,
   "customPrimaryColor": "#FF69B4",
   "languageId": "001",
-  "themeId": "os"
+  "themeId": "dark",
+  "productName": "大管家"
 }

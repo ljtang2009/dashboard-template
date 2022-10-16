@@ -33,74 +33,64 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+export default {
+  name: 'PrimaryColorSelector'
+}
+</script>
+<script setup lang="ts">
+import { ref } from 'vue';
 import ConfigItem from '@/components/AppConfig/ConfigItem.vue'
 import { CheckTwotone } from '@vicons/material'
 import primaryColors, { colorType as primaryColorType } from '@/config/primaryColors'
 import usePrimaryColorStore from '@/store/appConfig/primaryColor'
 import appConfigDefault from '@/config/appConfigDefault.json'
 
-export default defineComponent({
-  name: 'PrimaryColorSelector',
-  components: {
-    ConfigItem,
-    CheckTwotone
-  },
-  setup() {
-    const primaryColorStore = usePrimaryColorStore()
+const primaryColorStore = usePrimaryColorStore()
 
-    const primaryColorId = ref<string>(primaryColorStore.primaryColorId);
-    const isCustomPrimaryColor = ref<boolean>(primaryColorStore.isCustomPrimaryColor);
-    const customPrimaryColor = ref<string>(primaryColorStore.customPrimaryColor);
+const primaryColorId = ref<string>(primaryColorStore.primaryColorId);
+const isCustomPrimaryColor = ref<boolean>(primaryColorStore.isCustomPrimaryColor);
+const customPrimaryColor = ref<string>(primaryColorStore.customPrimaryColor);
 
-    const selectSwatch = (colorItem: primaryColorType) => {
-      isCustomPrimaryColor.value = false
-      primaryColorId.value = colorItem.id
-      primaryColorStore.$patch((state) => {
-        state.isCustomPrimaryColor = false
-        state.primaryColorId = colorItem.id
-      })
-    }
+const selectSwatch = (colorItem: primaryColorType) => {
+  isCustomPrimaryColor.value = false
+  primaryColorId.value = colorItem.id
+  primaryColorStore.$patch((state) => {
+    state.isCustomPrimaryColor = false
+    state.primaryColorId = colorItem.id
+  })
+}
 
-    const selectCustomColor = (value: string) => {
-      isCustomPrimaryColor.value = true
-      customPrimaryColor.value = value
-      primaryColorStore.$patch((state) => {
-        state.isCustomPrimaryColor = true
-        state.customPrimaryColor = value
-      })
-    }
+const selectCustomColor = (value: string) => {
+  isCustomPrimaryColor.value = true
+  customPrimaryColor.value = value
+  primaryColorStore.$patch((state) => {
+    state.isCustomPrimaryColor = true
+    state.customPrimaryColor = value
+  })
+}
 
-    const getConfig = () => {
-      return {
-        primaryColorId: primaryColorStore.primaryColorId,
-        isCustomPrimaryColor: primaryColorStore.isCustomPrimaryColor,
-        customPrimaryColor: primaryColorStore.customPrimaryColor
-      }
-    }
-
-    const reset = () => {
-      primaryColorId.value = appConfigDefault.primaryColorId
-      isCustomPrimaryColor.value = appConfigDefault.isCustomPrimaryColor
-      customPrimaryColor.value = appConfigDefault.customPrimaryColor
-      primaryColorStore.$patch((state) => {
-        state.primaryColorId = primaryColorId.value
-        state.isCustomPrimaryColor = isCustomPrimaryColor.value
-        state.customPrimaryColor = customPrimaryColor.value
-      })
-    }
-
-    return {
-      primaryColors,
-      primaryColorId,
-      isCustomPrimaryColor,
-      customPrimaryColor,
-      selectSwatch,
-      selectCustomColor,
-      getConfig,
-      reset
-    }
+const getConfig = () => {
+  return {
+    primaryColorId: primaryColorStore.primaryColorId,
+    isCustomPrimaryColor: primaryColorStore.isCustomPrimaryColor,
+    customPrimaryColor: primaryColorStore.customPrimaryColor
   }
+}
+
+const reset = () => {
+  primaryColorId.value = appConfigDefault.primaryColorId
+  isCustomPrimaryColor.value = appConfigDefault.isCustomPrimaryColor
+  customPrimaryColor.value = appConfigDefault.customPrimaryColor
+  primaryColorStore.$patch((state) => {
+    state.primaryColorId = primaryColorId.value
+    state.isCustomPrimaryColor = isCustomPrimaryColor.value
+    state.customPrimaryColor = customPrimaryColor.value
+  })
+}
+
+defineExpose({
+  getConfig,
+  reset
 })
 </script>
 

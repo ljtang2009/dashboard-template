@@ -13,7 +13,8 @@
     "reset": "@:common.reset",
     "close": "@:common.close",
     "callback": {
-      "saveSuccessfully": "@:common.save@:common.successfully"
+      "saveSuccessfully": "@:common.save@:common.successfully",
+      "resetSuccessfully": "@:common.reset@:common.successfully"
     },
     "modules": {
       "primaryColor": {

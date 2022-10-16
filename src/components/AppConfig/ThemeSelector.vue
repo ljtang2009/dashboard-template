@@ -16,59 +16,51 @@
   </config-item>
 </template>
 <script lang="ts">
-import { defineComponent, ref, CSSProperties } from 'vue';
+export default {
+  name: 'ThemeSelector'
+}
+</script>
+<script setup lang="ts">
+import { ref, CSSProperties } from 'vue';
 import ConfigItem from '@/components/AppConfig/ConfigItem.vue'
 import useThemeStore from '@/store/appConfig/theme'
 import ThemeType from '@/config/theme';
 import appConfigDefault from '@/config/appConfigDefault.json'
 import { LightModeFilled, ModeNightRound } from '@vicons/material'
 
-export default defineComponent({
-  name: 'ThemeSelector',
-  components: {
-    ConfigItem,
-  },
-  setup() {
-    const themeStore = useThemeStore()
-    const isDark = ref<boolean>(themeStore.isDark)
+const themeStore = useThemeStore()
+const isDark = ref<boolean>(themeStore.isDark)
 
-    const update = (value: boolean) => {
-      themeStore.$patch((state) => {
-        state.themeId = value ? ThemeType.dark : ThemeType.light
-      })
-    }
+const update = (value: boolean) => {
+  themeStore.$patch((state) => {
+    state.themeId = value ? ThemeType.dark : ThemeType.light
+  })
+}
 
-    const railStyle = (_info: {
-      focused: boolean
-      checked: boolean
-    }) => {
-      const style: CSSProperties = {}
-      style.backgroundColor = '#003366'
-      return style
-    }
+const railStyle = (_info: {
+  focused: boolean
+  checked: boolean
+}) => {
+  const style: CSSProperties = {}
+  style.backgroundColor = '#003366'
+  return style
+}
 
-    const getConfig = () => {
-      return {
-        themeId: themeStore.themeId
-      }
-    }
-
-    const reset = () => {
-      themeStore.$patch((state) => {
-        state.themeId = appConfigDefault.themeId
-      })
-      isDark.value = themeStore.isDark
-    }
-
-    return {
-      isDark,
-      railStyle,
-      LightModeFilled,
-      ModeNightRound,
-      update,
-      getConfig,
-      reset,
-    }
+const getConfig = () => {
+  return {
+    themeId: themeStore.themeId
   }
+}
+
+const reset = () => {
+  themeStore.$patch((state) => {
+    state.themeId = appConfigDefault.themeId
+  })
+  isDark.value = themeStore.isDark
+}
+
+defineExpose({
+  getConfig,
+  reset
 })
 </script>

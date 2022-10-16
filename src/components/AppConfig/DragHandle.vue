@@ -1,5 +1,5 @@
 <template>
-  <n-button ref="drag-handle" class="drag-handle" circle type="primary">
+  <n-button ref="dragHandle" class="drag-handle" circle type="primary">
     <template #icon>
       <n-icon size="36">
         <settings-outlined />
@@ -7,11 +7,17 @@
     </template>
   </n-button>
 </template>
-
 <script lang="ts">
-import { defineComponent, ref, onMounted, ComponentPublicInstance } from 'vue';
+export default {
+  name: 'DragHandle',
+}
+</script>
+<script setup lang="ts">
+import { ref, onMounted, ComponentPublicInstance } from 'vue';
 import interact from 'interactjs'
 import { SettingsOutlined } from '@vicons/material'
+
+const emit = defineEmits(['tap'])
 
 function setDraggable(element: ComponentPublicInstance | null, tapEvent: () => void) {
   const position = { x: 0, y: 0 }
@@ -44,27 +50,15 @@ function setDraggable(element: ComponentPublicInstance | null, tapEvent: () => v
 
 }
 
-export default defineComponent({
-  name: 'DragHandle',
-  components: {
-    SettingsOutlined
-  },
-  emits: ['tap'],
-  setup(_props, context) {
-    const dragHandle = ref(null);
-    onMounted(() => {
-      setDraggable(dragHandle.value, () => {
-        context.emit('tap')
-      })
-    });
+const dragHandle = ref(null);
 
-    return {
-      'drag-handle': dragHandle,
-    }
-  }
+onMounted(() => {
+  setDraggable(dragHandle.value, () => {
+    emit('tap')
+  })
 })
-</script>
 
+</script>
 <style lang="less" scoped>
 @handle-size: 50px;
 
