@@ -2,7 +2,7 @@
   <config-item>
     <template #title>{{$t('appConfig.modules.theme.title')}}</template>
     <template #content>
-      <n-switch v-model:value="isDark" :rail-style="railStyle" @update:value="update">
+      <n-switch v-model:value="isDark" size="small" :rail-style="railStyle" @update:value="update">
         <template #checked>{{$t('appConfig.modules.theme.light')}}</template>
         <template #unchecked>{{$t('appConfig.modules.theme.dark')}}</template>
         <template #checked-icon>

@@ -2,7 +2,7 @@
   <config-item>
     <template #title>{{$t('appConfig.modules.language.title')}}</template>
     <template #content>
-      <n-select v-model:value="currentLanguageId" :options="options" @update:value="update" />
+      <n-select v-model:value="currentLanguageId" size="small" :options="options" @update:value="update" />
     </template>
   </config-item>
 </template>
