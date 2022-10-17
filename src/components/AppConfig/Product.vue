@@ -8,9 +8,9 @@
             @update:value="updateProductName" />
         </n-form-item>
         <n-form-item label="商标">
-          <n-upload v-model:file-list="logoList" :accept="logoAcceptTypes.join(',')" :max="1" action="/dev/logo/save"
-            :list-type="logoUploadListType" @before-upload="beforeUploadLogo" @preview="handlePreviewLogo"
-            @change="handleLogoChange" @finish="handleLogoFinish">
+          <n-upload v-if="showLogoUpload" v-model:file-list="logoList" :accept="logoAcceptTypes.join(',')" :max="1"
+            action="/dev/logo/save" :list-type="logoUploadListType" @before-upload="beforeUploadLogo"
+            @preview="handlePreviewLogo" @change="handleLogoChange" @finish="handleLogoFinish">
             <n-upload-dragger>
               <div>
                 <n-icon size="32">
@@ -34,7 +34,7 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import { ref, ComponentPublicInstance } from 'vue';
+import { ref, ComponentPublicInstance, nextTick } from 'vue';
 import { UploadFileInfo, useMessage } from 'naive-ui'
 import { FileUploadFilled } from '@vicons/material'
 import { reset as resetLogo } from '@/api/dev/logo'
@@ -126,17 +126,23 @@ function handleLogoFinish({ file }: { file: UploadFileInfo }) {
   file.url = `${logoUrl}?${(new Date()).valueOf()}`
 }
 
+const showLogoUpload = ref(true)
+
 const getConfig = () => {
   return {
     productName: model.value.productName
   }
 }
 
-
 const reset = async () => {
   model.value.productName = appConfigDefault.productName
+
   updateProductName(appConfigDefault.productName)
   await resetLogo()
+  showLogoUpload.value = false
+  await nextTick()
+  showLogoUpload.value = true
+
   if (logoList.value.length > 0) {
     logoList.value[0].url = `${logoUrl}?${(new Date()).valueOf()}`
   }
