@@ -21,7 +21,10 @@ function handleError(error: AxiosError) {
     const title = `${error.response.status} ${error.response.statusText}`;
     if (isProd) {
       // TODO 记录log
-      message.error(title);
+      message.error(title, {
+        duration: 0,
+        closable: true,
+      });
     } else {
       dialog.create({
         type: 'error',
@@ -30,7 +33,10 @@ function handleError(error: AxiosError) {
       });
     }
   } else {
-    message.error(error.message);
+    message.error(error.message, {
+      duration: 0,
+      closable: true,
+    });
   }
 }
 

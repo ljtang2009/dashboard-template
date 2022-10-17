@@ -1,13 +1,13 @@
 <template>
   <config-item>
-    <template #title>产品</template>
+    <template #title>{{$t('appConfig.modules.product.title')}}</template>
     <template #content>
       <n-form :show-feedback="false" label-placement="left" show-require-mark>
-        <n-form-item label="名称" path="productName">
+        <n-form-item :label="$t('appConfig.modules.product.name')" path="productName">
           <n-input v-model:value="model.productName" size="small" type="text" clearable
             @update:value="updateProductName" />
         </n-form-item>
-        <n-form-item label="商标">
+        <n-form-item :label="$t('appConfig.modules.product.logo')">
           <n-upload v-if="showLogoUpload" v-model:file-list="logoList" :accept="logoAcceptTypes.join(',')" :max="1"
             action="/dev/logo/save" :list-type="logoUploadListType" @before-upload="beforeUploadLogo"
             @preview="handlePreviewLogo" @change="handleLogoChange" @finish="handleLogoFinish">
@@ -17,9 +17,7 @@
                   <file-upload-filled />
                 </n-icon>
               </div>
-              <n-text>
-                点击或者拖动文件到该区域来上传
-              </n-text>
+              <n-text>{{$t('appConfig.modules.product.dragOrClickToUpload')}}</n-text>
             </n-upload-dragger>
           </n-upload>
           <n-image v-show="false" ref="previewLogoImage" :src="previewLogoUrl" />
@@ -36,12 +34,15 @@ export default {
 <script setup lang="ts">
 import { ref, ComponentPublicInstance, nextTick } from 'vue';
 import { UploadFileInfo, useMessage } from 'naive-ui'
+import { useI18n } from 'vue-i18n'
 import { FileUploadFilled } from '@vicons/material'
+import { getFileTypeListByAcceptTypes } from '@/utils/input'
 import { reset as resetLogo } from '@/api/dev/logo'
 import useProductStore from '@/store/appConfig/product'
 import appConfigDefault from '@/config/appConfigDefault.json'
 
 const message = useMessage()
+const { t } = useI18n()
 const productStore = useProductStore()
 
 const model = ref({
@@ -68,19 +69,23 @@ const previewLogoUrl = ref('')
 const previewLogoImage = ref<ComponentPublicInstance>()
 
 const logoAcceptTypes = ['image/png']
+const logoAcceptTypesForMessage = getFileTypeListByAcceptTypes(logoAcceptTypes)
 const logoMaxSize = 2 // MB
 // 检查文件
 function beforeUploadLogo(data: { file: UploadFileInfo }) {
   let error
   if (data.file.type && logoAcceptTypes.indexOf(data.file.type) === -1) {
-    error = '只能上传png格式的图片文件，请重新上传'
+    error = t('appConfig.modules.product.fileFormatError', logoAcceptTypesForMessage)
   }
   const logoMaxSizeByte = logoMaxSize * 1024 * 1024
   if (!error && data.file.file && data.file.file.size > logoMaxSizeByte) {
-    error = `文件大小不能超过 ${logoMaxSize}MB，请重新上传`
+    error = t('appConfig.modules.product.fileMaxSizeError', { maxSize: `${logoMaxSize}MB` })
   }
   if (error) {
-    message.error(error)
+    message.error(error, {
+      duration: 0,
+      closable: true,
+    })
     return false
   }
   return true

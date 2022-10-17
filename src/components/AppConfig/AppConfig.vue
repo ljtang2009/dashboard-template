@@ -96,12 +96,10 @@ function reset() {
       }
     }
   }
+  // 不处理错误，由子组件处理
   Promise.all(resetFunctionList).then(() => {
     message.success(t('appConfig.callback.resetSuccessfully'))
   })
-    // .catch(error => {
-    //   message.error(error.message)
-    // })
     .finally(() => {
       isDoingReset.value = false
     })

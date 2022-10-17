@@ -6,7 +6,7 @@ import { LocaleMessage } from '@intlify/core-base';
 import { getDiscreteApi } from '@/utils/discreteApi';
 
 async function loadLocaleFile(locale: string) {
-  return await import(/* webpackChunkName: "locale-[request]" */ `@/locales/${locale}.json`);
+  return await import(/* webpackChunkName: "locale-[request]" */ `@/locales/${locale}/index.ts`);
 }
 
 let i18nInstance: I18n;
@@ -30,6 +30,7 @@ export async function setupI18n() {
     const message = await loadLocaleFile(locale);
     messages[locale] = message.default;
   }
+
   i18nInstance = createI18n({
     globalInjection: true,
     legacy: false,
