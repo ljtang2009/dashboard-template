@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     DragHandle: typeof import('./src/components/AppConfig/DragHandle.vue')['default']
     LanguageSelector: typeof import('./src/components/AppConfig/LanguageSelector.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NButtonGroup: typeof import('naive-ui')['NButtonGroup']
     NColorPicker: typeof import('naive-ui')['NColorPicker']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDivider: typeof import('naive-ui')['NDivider']

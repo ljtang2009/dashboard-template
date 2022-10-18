@@ -20,6 +20,7 @@ export default {
         title: '主题',
         light: '亮',
         dark: '暗',
+        dependOnOs: '隨系統',
       },
       product: {
         title: '產品',

@@ -20,6 +20,7 @@ export default {
         title: 'Theme',
         light: 'LIGHT',
         dark: 'DARK',
+        dependOnOs: 'OS',
       },
       product: {
         title: 'Product',

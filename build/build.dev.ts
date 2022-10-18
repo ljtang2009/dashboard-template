@@ -2,10 +2,7 @@ import getPort from 'get-port';
 import config from './webpack/webpack.config.dev';
 import { webpack } from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import {
-  devServerPort,
-  // devSupplyServerPort
-} from './config';
+import { devServerPort, devSupplyServerPort } from './config';
 import launchSupplyServer from './devSupply/dev.supply';
 import bootstrap from './core/bootstrap';
 import detectDevSupply from './utils/detectDevSupply';
@@ -17,7 +14,7 @@ const compiler = webpack(config);
 
 const runServer = async () => {
   await bootstrap();
-  // let _devSupplyServerPort = devSupplyServerPort;
+  let _devSupplyServerPort = devSupplyServerPort;
   if (!isDebugSupply) {
     const { port: _devSupplyServerPort } = await launchSupplyServer();
   } else {
