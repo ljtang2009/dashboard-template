@@ -2,7 +2,10 @@ import getPort from 'get-port';
 import config from './webpack/webpack.config.dev';
 import { webpack } from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import { devServerPort, devSupplyServerPort } from './config';
+import {
+  devServerPort,
+  // devSupplyServerPort
+} from './config';
 import launchSupplyServer from './devSupply/dev.supply';
 import bootstrap from './core/bootstrap';
 import detectDevSupply from './utils/detectDevSupply';
@@ -14,7 +17,7 @@ const compiler = webpack(config);
 
 const runServer = async () => {
   await bootstrap();
-  let _devSupplyServerPort = devSupplyServerPort;
+  // let _devSupplyServerPort = devSupplyServerPort;
   if (!isDebugSupply) {
     const { port: _devSupplyServerPort } = await launchSupplyServer();
   } else {
@@ -22,6 +25,8 @@ const runServer = async () => {
     await detectDevSupply();
   }
   // HACK 如果是debug supply, 注意端口可能为因为被占用而改变。
+
+  // const mockServerUrl = 'http://127.0.0.1:4523/m1/1773693-0-default';  // mock服务
 
   const devServerOptions: WebpackDevServer.Configuration = {
     client: {
@@ -35,6 +40,7 @@ const runServer = async () => {
     }),
     proxy: {
       '/dev': `http://localhost:${_devSupplyServerPort}`,
+      // '/dev': mockServerUrl,
     },
   };
 

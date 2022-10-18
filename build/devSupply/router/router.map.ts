@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 
-import appConfig from '../module/appConfig';
-import logo from '../module/logo';
+import appConfig from '../controller/appConfig';
+import logo from '../controller/logo';
 
 const moduleList = [appConfig, logo];
 
