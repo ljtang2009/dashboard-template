@@ -1,8 +1,6 @@
 <template>
   <div>
-    <!-- <img src="@/assets/logo.png" style="width: 100px;" />
-    产品名称 -->
-    Login1
+    Register
   </div>
 </template>
 <script lang="ts">

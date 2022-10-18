@@ -71,6 +71,15 @@ const previewLogoImage = ref<ComponentPublicInstance>()
 const logoAcceptTypes = ['image/png']
 const logoAcceptTypesForMessage = getFileTypeListByAcceptTypes(logoAcceptTypes)
 const logoMaxSize = 2 // MB
+
+// 变更页面favicon，而不是直接替换对应文件，否则页面会刷新。
+// 重新build，会把 src 中的logo 覆盖到 public中
+function setFavicon(value: string) {
+  const faviconElement = document.querySelector("link[rel*='icon']")
+  if (faviconElement) {
+    faviconElement.setAttribute('href', value)
+  }
+}
 // 检查文件
 function beforeUploadLogo(data: { file: UploadFileInfo }) {
   let error
@@ -128,7 +137,9 @@ function handleLogoChange(data: { fileList: UploadFileInfo[] }) {
 }
 
 function handleLogoFinish({ file }: { file: UploadFileInfo }) {
-  file.url = `${logoUrl}?${(new Date()).valueOf()}`
+  const _logoUrl = `${logoUrl}?${(new Date()).valueOf()}`
+  file.url = _logoUrl
+  setFavicon(_logoUrl)
 }
 
 const showLogoUpload = ref(true)
@@ -142,15 +153,16 @@ const getConfig = () => {
 const reset = async () => {
   model.value.productName = appConfigDefault.productName
 
+  const _logoUrl = `${logoUrl}?${(new Date()).valueOf()}`
   updateProductName(appConfigDefault.productName)
   await resetLogo()
   showLogoUpload.value = false
+  if (logoList.value.length > 0) {
+    logoList.value[0].url = _logoUrl
+  }
+  setFavicon(_logoUrl)
   await nextTick()
   showLogoUpload.value = true
-
-  if (logoList.value.length > 0) {
-    logoList.value[0].url = `${logoUrl}?${(new Date()).valueOf()}`
-  }
 }
 
 defineExpose({

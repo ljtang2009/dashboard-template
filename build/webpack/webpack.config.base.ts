@@ -1,5 +1,5 @@
 import { Configuration, DefinePlugin } from 'webpack';
-import * as path from 'path';
+import path from 'path';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 import HtmlWebpackPlugin = require('html-webpack-plugin');
 import { VueLoaderPlugin } from 'vue-loader';

@@ -4,6 +4,7 @@ import { upload } from '../utils/multer';
 import fs from 'fs-extra';
 
 const logoPath = path.resolve(__dirname, '../../../src/assets/logo.png');
+// const faviconPath = path.resolve(__dirname, '../../../public/logo.png'); // favicon 文件
 const logoDefaultPath = path.resolve(__dirname, '../../../src/assets/logo.default.png');
 
 /**
@@ -17,21 +18,37 @@ const get = async (_req: Request, res: Response, _next: NextFunction) => {
 };
 
 /**
+ * 把buffer保存成文件
+ * @param buffer
+ * @param filePath
+ */
+const _save = async (buffer: Buffer | undefined, filePath: string) => {
+  const ws = fs.createWriteStream(filePath);
+  return new Promise<void>((resolve, reject) => {
+    ws.write(buffer, (error) => {
+      ws.close();
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
+  });
+};
+
+/**
  * 保存logo
  * @param req
  * @param res
  * @param _next
  */
-const save = async (req: Request, res: Response, next: NextFunction) => {
-  const ws = fs.createWriteStream(logoPath);
-  ws.write(req.file?.buffer, (error) => {
-    ws.close();
-    if (error) {
-      next(error);
-    } else {
-      res.end();
-    }
-  });
+const save = async (req: Request, res: Response, _next: NextFunction) => {
+  // 如果改favicon，会造成页面刷新。（添加watch ignore无效）
+  // 所以这里不改favicon, 重新build的时候，把src中的logo覆盖到public中
+  // const functionList = [_save(req.file?.buffer, logoPath), _save(req.file?.buffer, faviconPath)];
+  const functionList = [_save(req.file?.buffer, logoPath)];
+  await Promise.all(functionList);
+  res.end();
 };
 
 /**

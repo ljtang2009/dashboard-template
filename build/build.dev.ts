@@ -4,6 +4,7 @@ import { webpack } from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import { devServerPort, devSupplyServerPort } from './config';
 import launchSupplyServer from './devSupply/dev.supply';
+import bootstrap from './core/bootstrap';
 
 // 调试dev supply
 const isDebugSupply = !!process.env['DEBUG_SUPPLY'];
@@ -11,6 +12,7 @@ const isDebugSupply = !!process.env['DEBUG_SUPPLY'];
 const compiler = webpack(config);
 
 const runServer = async () => {
+  await bootstrap();
   let _devSupplyServerPort = devSupplyServerPort;
   if (!isDebugSupply) {
     const { port: _devSupplyServerPort } = await launchSupplyServer();

@@ -6,7 +6,7 @@ import ESLintPlugin from 'eslint-webpack-plugin';
 import { analyzerPort } from '../config';
 import getPort from 'get-port';
 import StylelintPlugin from 'stylelint-webpack-plugin';
-import * as path from 'path';
+import path from 'path';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 

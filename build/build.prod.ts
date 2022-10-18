@@ -1,7 +1,9 @@
 import getConfig from './webpack/webpack.config.prod';
 import webpack from 'webpack';
+import bootstrap from './core/bootstrap';
 
 async function build() {
+  await bootstrap();
   const webpackConfig = await getConfig();
   webpack(webpackConfig, (err, stats) => {
     if (err) {
