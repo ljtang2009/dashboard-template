@@ -5,6 +5,7 @@ import WebpackDevServer from 'webpack-dev-server';
 import { devServerPort, devSupplyServerPort } from './config';
 import launchSupplyServer from './devSupply/dev.supply';
 import bootstrap from './core/bootstrap';
+import detectDevSupply from './utils/detectDevSupply';
 
 // 调试dev supply
 const isDebugSupply = !!process.env['DEBUG_SUPPLY'];
@@ -16,6 +17,9 @@ const runServer = async () => {
   let _devSupplyServerPort = devSupplyServerPort;
   if (!isDebugSupply) {
     const { port: _devSupplyServerPort } = await launchSupplyServer();
+  } else {
+    // 检测 dev supply是否运行
+    await detectDevSupply();
   }
   // HACK 如果是debug supply, 注意端口可能为因为被占用而改变。
 
