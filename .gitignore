@@ -105,3 +105,6 @@ dist
 
 # VSCode extension localhistory files
 .history
+
+# 日志
+.log

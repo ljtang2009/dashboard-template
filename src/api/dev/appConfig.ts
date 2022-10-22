@@ -2,11 +2,11 @@ import { request } from '@/utils/request';
 import { urlPrefix } from '@/api/dev/config';
 
 const moduleName = '/appConfig';
-function getUrl(value: string): string {
+function _getUrl(value: string): string {
   return `${urlPrefix}${moduleName}${value}`;
 }
-const saveUrl = getUrl('/save');
-const readUrl = getUrl('/read');
+const saveUrl = _getUrl('/save');
+const getUrl = _getUrl('/get');
 
 /**
  * 保存配置
@@ -24,9 +24,9 @@ export function save(data: object) {
  * 读取配置
  * @returns
  */
-export function read() {
+export function get() {
   return request({
-    url: readUrl,
+    url: getUrl,
     method: 'get',
   });
 }

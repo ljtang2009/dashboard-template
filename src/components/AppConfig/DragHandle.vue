@@ -1,9 +1,7 @@
 <template>
   <n-button ref="dragHandle" class="drag-handle" circle type="primary">
     <template #icon>
-      <n-icon size="36">
-        <settings-outlined />
-      </n-icon>
+      <n-icon size="2rem" :component="SettingsOutlined" />
     </template>
   </n-button>
 </template>
@@ -60,7 +58,7 @@ onMounted(() => {
 
 </script>
 <style lang="less" scoped>
-@handle-size: 50px;
+@handle-size: 3rem;
 
 .drag-handle {
   width: @handle-size;

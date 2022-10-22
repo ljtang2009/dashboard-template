@@ -8,25 +8,31 @@ const routes = [
     redirect: '/login',
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/view/user/Login.vue'),
-    meta: {
-      title: '登录',
-    },
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: () => import('@/view/user/Register.vue'),
-    meta: {
-      title: '注册',
-    },
-  },
-  {
-    path: '/page3',
-    name: 'Page3',
-    component: () => import('@/view/user/Page3.vue'),
+    path: '/users',
+    component: () => import('@/layout/UserLayout.vue'),
+    children: [
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import('@/view/user/Login.vue'),
+        meta: {
+          title: '登录',
+        },
+      },
+      {
+        path: '/register',
+        name: 'Register',
+        component: () => import('@/view/user/Register.vue'),
+        meta: {
+          title: '注册',
+        },
+      },
+      {
+        path: '/page3',
+        name: 'Page3',
+        component: () => import('@/view/user/Page3.vue'),
+      },
+    ],
   },
 ];
 

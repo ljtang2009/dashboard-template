@@ -18,9 +18,7 @@
                 <template #label>
                   <n-space size="small">
                     <span style="color: #ffffff">{{$t('appConfig.modules.primaryColor.Manual')}}</span>
-                    <n-icon v-if="isCustomPrimaryColor" size="14" color="#ffffff">
-                      <check-twotone />
-                    </n-icon>
+                    <n-icon v-if="isCustomPrimaryColor" size="14" color="#ffffff" :component="CheckTwotone" />
                   </n-space>
                 </template>
               </n-color-picker>

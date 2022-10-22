@@ -13,9 +13,7 @@
             @preview="handlePreviewLogo" @change="handleLogoChange" @finish="handleLogoFinish">
             <n-upload-dragger>
               <div>
-                <n-icon size="32">
-                  <file-upload-filled />
-                </n-icon>
+                <n-icon size="2rem" :component="FileUploadFilled" />
               </div>
               <n-text>{{$t('appConfig.modules.product.dragOrClickToUpload')}}</n-text>
             </n-upload-dragger>
@@ -55,7 +53,7 @@ const updateProductName = (value: string) => {
   })
 }
 
-const logoUrl = '/dev/logo/get'
+const logoUrl = '/dev/logo/getStream'
 const logoList = ref([
   {
     id: 'logo',
@@ -70,7 +68,7 @@ const previewLogoImage = ref<ComponentPublicInstance>()
 
 const logoAcceptTypes = ['image/png']
 const logoAcceptTypesForMessage = getFileTypeListByAcceptTypes(logoAcceptTypes)
-const logoMaxSize = 2 // MB
+const logoMaxSize = 2 // TODO 和后端同步配置
 
 // 变更页面favicon，而不是直接替换对应文件，否则页面会刷新。
 // 重新build，会把 src 中的logo 覆盖到 public中

@@ -3,7 +3,7 @@ import config from './webpack/webpack.config.dev';
 import { webpack } from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import { devServerPort, devSupplyServerPort } from './config';
-import launchSupplyServer from './devSupply/dev.supply';
+import { bootstrap as launchSupplyServer } from './devSupply/main';
 import bootstrap from './core/bootstrap';
 import detectDevSupply from './utils/detectDevSupply';
 

@@ -6,13 +6,19 @@
     "moduleResolution": "node",
     "rootDir": "../",
 
+    //Emit
+    "sourceMap": true,
+
     // Interop Constraints
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
 
     // Language and Environment
     "lib": ["es2021"],
     "target": "es2021",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
 
     // Completeness
     "skipLibCheck": true

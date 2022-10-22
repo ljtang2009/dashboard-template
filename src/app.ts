@@ -2,7 +2,7 @@ import { createApp } from 'vue/dist/vue.esm-bundler';
 import App from '@/App.vue';
 import { createPinia } from 'pinia';
 import { setupI18n } from '@/i18n';
-import { read as readAppConfig } from '@/api/dev/appConfig';
+import { get as getAppConfig } from '@/api/dev/appConfig';
 import router from '@/router';
 import '@/style/global.less';
 
@@ -10,7 +10,7 @@ const isProd = process.env['NODE_ENV'] === 'production';
 
 async function init() {
   if (!isProd) {
-    window.appConfig = (await readAppConfig()) as Record<string, any>;
+    window.appConfig = (await getAppConfig()) as Record<string, any>;
   }
 
   const pinia = createPinia();

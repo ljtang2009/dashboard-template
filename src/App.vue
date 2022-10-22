@@ -1,6 +1,6 @@
 <template>
   <n-config-provider :theme-overrides="themeOverrides" :theme="theme" :locale="language.locale"
-    :date-locale="language.dateLocale">
+    :date-locale="language.dateLocale" abstract>
     <n-loading-bar-provider>
       <n-message-provider>
         <app-config v-if="!isProd" />
