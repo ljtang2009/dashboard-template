@@ -27,5 +27,5 @@
     "files": true,
     "pretty": true
   },
-  "include": ["**/*", "../config/**/*"]
+  "include": ["**/*"]
 }

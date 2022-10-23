@@ -4,9 +4,9 @@
   "description": "",
   "scripts": {
     "build:dev": "ts-node build/build.dev.ts",
-    "build:dev.debugSupply": "cross-env DEBUG_SUPPLY=1 ts-node build/build.dev.ts",
     "build:prod": "npm run type-check && ts-node build/build.prod.ts",
     "preview": "ts-node build/preview.ts",
+    "dev-config-server": "ts-node build/dev-config-server/main.debug.ts",
     "type-check": "vue-tsc --noEmit -p src/tsconfig.json --composite false",
     "lint": "npm run eslint && npm run stylelint:no-color",
     "eslint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts",
@@ -52,7 +52,6 @@
     "babel-plugin-transform-remove-debugger": "^6.9.4",
     "body-parser": "^1.20.1",
     "copy-webpack-plugin": "^11.0.0",
-    "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.1.0",
     "dotenv": "^16.0.2",

@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Req } from '@nestjs/common';
-import { AppConfigService } from './appConfig.service';
+import { AppConfigService } from './app-config.service';
 import { Request } from 'express';
 
-@Controller('appConfig')
+@Controller('app-config')
 export class AppConfigController {
   public constructor(private appConfigService: AppConfigService) {}
 

@@ -1,7 +1,7 @@
 import { request } from '@/utils/request';
-import { urlPrefix } from '@/api/dev/config';
+import { devUrlPrefix as urlPrefix } from '@/api/common';
 
-const moduleName = '/appConfig';
+const moduleName = '/app-config';
 function _getUrl(value: string): string {
   return `${urlPrefix}${moduleName}${value}`;
 }

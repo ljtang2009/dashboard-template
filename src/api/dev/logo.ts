@@ -1,5 +1,5 @@
 import { request } from '@/utils/request';
-import { urlPrefix } from '@/api/dev/config';
+import { devUrlPrefix as urlPrefix } from '@/api/common';
 
 const moduleName = '/logo';
 function getUrl(value: string): string {

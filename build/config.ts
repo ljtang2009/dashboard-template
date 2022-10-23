@@ -14,6 +14,11 @@ export const analyzerPort = 8098;
 export const previewPort = 8097;
 
 /**
- * 开发支持服务器端口
+ * 开发配置服务器端口
  */
-export const devSupplyServerPort = 8096;
+export const devConfigServerPort = 8096;
+
+/**
+ * mock服务地址
+ */
+export const mockServerUrl = 'http://127.0.0.1:4523/m1/1773693-0-default';

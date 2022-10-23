@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import getPort from 'get-port';
-import { devSupplyServerPort } from '../config';
+import { devConfigServerPort } from '../config';
 import { HttpLoggerMiddleware } from './core/http.logger.middleware';
 import { ResponseWrapInterceptor } from './core/response.wrap.interceptor';
 import { ExceptionInterceptor } from './core/exception.interceptor';
@@ -20,7 +20,7 @@ export async function bootstrap() {
   // 异常拦截，传给response
   app.useGlobalInterceptors(new ExceptionInterceptor());
   const port = await getPort({
-    port: devSupplyServerPort,
+    port: devConfigServerPort,
   });
   await app.listen(port);
   return {

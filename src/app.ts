@@ -2,7 +2,7 @@ import { createApp } from 'vue/dist/vue.esm-bundler';
 import App from '@/App.vue';
 import { createPinia } from 'pinia';
 import { setupI18n } from '@/i18n';
-import { get as getAppConfig } from '@/api/dev/appConfig';
+import { get as getAppConfig } from '@/api/dev/app-config';
 import router from '@/router';
 import '@/style/global.less';
 

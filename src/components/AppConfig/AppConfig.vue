@@ -32,7 +32,7 @@ export default {
 import { ref, ComponentPublicInstance } from 'vue';
 import { useMessage } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
-import { save as saveAppConfig } from '@/api/dev/appConfig'
+import { save as saveAppConfig } from '@/api/dev/app-config'
 import DragHandle from '@/components/AppConfig/DragHandle.vue'
 
 // 配置组件

@@ -11,7 +11,7 @@ async function launchServer() {
   });
   app.use(express.static(path.resolve(__dirname, '../dist')));
   app.listen(port, () => {
-    const url = `http://localhost:${port}`;
+    const url = `http://127.0.0.1:${port}`;
     open(url);
     console.log(url);
   });

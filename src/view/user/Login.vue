@@ -29,6 +29,7 @@ export default {
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { FormInst } from 'naive-ui'
+import { login } from '@/api/user/user'
 
 const formRef = ref<FormInst | null>(null)
 const loading = ref(false)
@@ -52,16 +53,24 @@ const rules = {
 }
 
 function submit() {
-  formRef.value?.validate((errors) => {
+  formRef.value?.validate(async (errors) => {
     if (!errors) {
       loading.value = true
+      let loginResult
+      try {
+        loginResult = await login({
+          loginName: formValue.value.loginName,
+          loginPassword: formValue.value.loginPassword
+        })
+      }
+      catch (e) {
+        return
+      }
+      finally {
+        loading.value = false
+      }
+      console.log('loginResult', loginResult)
     }
-    // if (!errors) {
-    //   // message.success('Valid')
-    // } else {
-    //   console.log(errors)
-    //   message.error('Invalid')
-    // }
   })
 }
 </script>
