@@ -1,4 +1,4 @@
-import getBaseConfiguration from './webpack.config.base';
+import getBaseConfiguration from '@build/webpack/webpack.config.base';
 import { Configuration, WatchIgnorePlugin } from 'webpack';
 import { merge } from 'webpack-merge';
 import path from 'path';

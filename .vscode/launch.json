@@ -5,13 +5,19 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "dev-config-server",
+      "name": "api",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"],
-      "env": { "TS_NODE_PROJECT": "build/tsconfig.json" },
-      "args": ["build/dev-config-server/main.debug.ts"],
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "${workspaceRoot}/node_modules/ts-node/register",
+        "-r",
+        "${workspaceFolder}/node_modules/tsconfig-paths/register"
+      ],
+      "args": ["${workspaceRoot}/src-api/main.debug.ts"],
+      "env": { "TS_NODE_PROJECT": "${workspaceRoot}/src-api/tsconfig.json" },
       "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart",
       "skipFiles": ["<node_internals>/**"],

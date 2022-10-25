@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import open from 'open';
 import getPort from 'get-port';
-import { previewPort } from './config';
+import { previewPort } from '@build/config';
 
 async function launchServer() {
   const app = express();

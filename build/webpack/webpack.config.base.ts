@@ -5,7 +5,7 @@ import HtmlWebpackPlugin = require('html-webpack-plugin');
 import { VueLoaderPlugin } from 'vue-loader';
 import * as dotenv from 'dotenv';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import PrintDatePlugin from './plugin/print-date';
+import PrintDatePlugin from '@build/webpack/plugin/print-date';
 import CopyPlugin from 'copy-webpack-plugin';
 import AutoImport from 'unplugin-auto-import/webpack';
 import Components from 'unplugin-vue-components/webpack';

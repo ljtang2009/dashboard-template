@@ -12,10 +12,10 @@ import {
   FileTypeValidator,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { LogoService } from './logo.service';
+import { LogoService } from '@src-api/modules/admin/logo/logo.service';
 import { Express, Response } from 'express';
 import { createReadStream } from 'fs';
-import { noWrapUrl } from '../core/response.wrap.interceptor';
+import { noWrapUrl } from '@src-api/core/response.wrap.interceptor';
 
 const logoMaxSize = 2; // TODO 和前端同步配置
 @Controller('logo')

@@ -1,9 +1,9 @@
-import getBaseConfiguration from './webpack.config.base';
+import getBaseConfiguration from '@build/webpack/webpack.config.base';
 import { ProgressPlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { merge } from 'webpack-merge';
 import ESLintPlugin from 'eslint-webpack-plugin';
-import { analyzerPort } from '../config';
+import { analyzerPort } from '@build/config';
 import getPort from 'get-port';
 import StylelintPlugin from 'stylelint-webpack-plugin';
 import path from 'path';

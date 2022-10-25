@@ -4,11 +4,10 @@
     // Modules
     "module": "commonjs",
     "moduleResolution": "node",
-    "rootDir": "../",
+    "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@build/*": ["*"],
-      "@src-api/*": ["../src-api/*"],
+      "@src-api/*": ["*"]
     },
 
     //Emit
@@ -33,5 +32,5 @@
     "pretty": true,
     "require": ["tsconfig-paths/register"]
   },
-  "include": ["**/*", "../src-api/**/*"]
+  "include": ["**/*"]
 }

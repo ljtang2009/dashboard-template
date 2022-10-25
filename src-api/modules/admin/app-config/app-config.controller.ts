@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Req } from '@nestjs/common';
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from '@src-api/modules/admin/app-config/app-config.service';
 import { Request } from 'express';
 
 @Controller('app-config')

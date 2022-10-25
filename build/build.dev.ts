@@ -1,41 +1,38 @@
 import getPort from 'get-port';
-import config from './webpack/webpack.config.dev';
+import config from '@build/webpack/webpack.config.dev';
 import { webpack } from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import { devServerPort, devConfigServerPort, mockServerUrl } from './config';
-import { bootstrap as launchDevConfigServer } from './dev-config-server/main';
-import bootstrap from './core/bootstrap';
-import detectDevConfigServer from './utils/detect-dev-config-server';
-import { parseArgs } from './utils/command';
+import { devServerPort,  mockServerUrl } from '@build/config';
+import { apiServerPort } from '@src-api/config';
+import { bootstrap as launchApiServer} from '@src-api/main'
+import bootstrap from '@build/core/bootstrap';
+import detectApiServer from '@build/utils/detect-api-server';
+import { parseArgs } from '@build/utils/command';
 
 const processArgs = parseArgs();
 
-// 手动调试dev-config-server
-const isManualDevConfigServer = !!processArgs['manual-dev-config-server'];
-// mock dev-config-server
-const isMockDevConfigServer = !!processArgs['mock-dev-config-server'];
+// 手动调试api-server
+const isManualApiServer = !!processArgs['manual-api-server'];
 // mock api-server
-// const isMockApiServer = !!processArgs['mock-api-server'];
+const isMockApiServer = !!processArgs['mock-api-server'];
 
 const compiler = webpack(config);
 
 const runServer = async () => {
   await bootstrap();
 
-  let devConfigServerUrl = mockServerUrl;
-  if (!isMockDevConfigServer) {
-    let _devConfigServerPort = devConfigServerPort;
-    if (!isManualDevConfigServer) {
-      const { port: _devConfigServerPort } = await launchDevConfigServer();
+  let apiServerUrl = mockServerUrl;
+  if (!isMockApiServer) {
+    let _apiServerPort = apiServerPort;
+    if (!isManualApiServer) {
+      const { port: _apiServerPort } = await launchApiServer();
     } else {
-      // 检测 dev-config-server是否运行
-      await detectDevConfigServer();
+      // 检测 api-server是否运行
+      await detectApiServer();
     }
-    // HACK 如果是dev-config-server, 注意端口可能为因为被占用而改变。
-    devConfigServerUrl = `http://127.0.0.1:${_devConfigServerPort}`;
+    // HACK 如果需要手动启动api-server, 注意端口可能为因为被占用而改变。
+    apiServerUrl = `http://127.0.0.1:${_apiServerPort}`;
   }
-
-  // const mockServerUrl = 'http://127.0.0.1:4523/m1/1773693-0-default';  // mock服务
 
   const devServerOptions: WebpackDevServer.Configuration = {
     client: {
@@ -48,8 +45,7 @@ const runServer = async () => {
       port: devServerPort,
     }),
     proxy: {
-      '/dev': devConfigServerUrl,
-      // '/dev': mockServerUrl,
+      '/api': apiServerUrl,
     },
   };
 

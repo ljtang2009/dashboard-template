@@ -17,6 +17,7 @@
     //Emit
     "declaration": true, // 使用 composite 选项必须开启 declaration
     "removeComments": true,
+    "sourceMap": true,
 
     //Projects
     "composite": true // 使用 composite, 它意味着工程可以被引用, 并支持增量编译

@@ -1,6 +1,6 @@
-import getConfig from './webpack/webpack.config.prod';
+import getConfig from '@build/webpack/webpack.config.prod';
 import webpack from 'webpack';
-import bootstrap from './core/bootstrap';
+import bootstrap from '@build/core/bootstrap';
 
 async function build() {
   await bootstrap();
