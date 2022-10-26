@@ -10,6 +10,7 @@
     "noPropertyAccessFromIndexSignature": true /* Enforces using indexed accessors for keys declared using an indexed type. */,
     "allowUnusedLabels": false /* Disable error reporting for unused labels. */,
     "allowUnreachableCode": false /* Disable error reporting for unreachable code. */,
+    "strictPropertyInitialization": false,
 
     //Modules
     "resolveJsonModule": true /* Enable importing .json files. */,

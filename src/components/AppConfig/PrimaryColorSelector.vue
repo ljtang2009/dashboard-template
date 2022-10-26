@@ -1,24 +1,25 @@
 <template>
   <config-item>
-    <template #title>{{$t('appConfig.modules.primaryColor.title')}}</template>
+    <template #title>{{ $t('appConfig.modules.primaryColor.title') }}</template>
     <template #content>
       <n-space vertical>
         <div>
           <n-space size="small">
             <n-tag v-for="(item, index) in primaryColors" :key="index" size="small" :bordered="false"
-              :color="{color: item.color}" class="tappable" @click="selectSwatch(item)">
+              :color="{ color: item.color }" class="tappable" @click="selectSwatch(item)">
               <n-icon size="14" color="#ffffff"
-                :style="{visibility: !isCustomPrimaryColor && primaryColorId === item.id ? 'visible' : 'hidden'}">
+                :style="{ visibility: primaryColorStore.isCustomPrimaryColor !== 'Y' && primaryColorStore.primaryColorId === item.id ? 'visible' : 'hidden' }">
                 <check-twotone />
               </n-icon>
             </n-tag>
             <div style="width: 100px;">
-              <n-color-picker v-model:value="customPrimaryColor" :show-alpha="false" size="small" :actions="['confirm']"
-                :modes="['hex', 'rgb', 'hsl', 'hsv']" @confirm="selectCustomColor">
+              <n-color-picker v-model:value="primaryColorStore.customPrimaryColor" :show-alpha="false" size="small"
+                :actions="['confirm']" :modes="['hex', 'rgb', 'hsl', 'hsv']" @confirm="selectCustomColor">
                 <template #label>
                   <n-space size="small">
-                    <span style="color: #ffffff">{{$t('appConfig.modules.primaryColor.Manual')}}</span>
-                    <n-icon v-if="isCustomPrimaryColor" size="14" color="#ffffff" :component="CheckTwotone" />
+                    <span style="color: #ffffff">{{ $t('appConfig.modules.primaryColor.Manual') }}</span>
+                    <n-icon v-if="primaryColorStore.isCustomPrimaryColor === 'Y'" size="14" color="#ffffff"
+                      :component="CheckTwotone" />
                   </n-space>
                 </template>
               </n-color-picker>
@@ -36,7 +37,6 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import { ref } from 'vue';
 import ConfigItem from '@/components/AppConfig/ConfigItem.vue'
 import { CheckTwotone } from '@vicons/material'
 import primaryColors, { colorType as primaryColorType } from '@/config/primaryColors'
@@ -45,24 +45,16 @@ import appConfigDefault from '@/config/appConfigDefault.json'
 
 const primaryColorStore = usePrimaryColorStore()
 
-const primaryColorId = ref<string>(primaryColorStore.primaryColorId);
-const isCustomPrimaryColor = ref<boolean>(primaryColorStore.isCustomPrimaryColor);
-const customPrimaryColor = ref<string>(primaryColorStore.customPrimaryColor);
-
 const selectSwatch = (colorItem: primaryColorType) => {
-  isCustomPrimaryColor.value = false
-  primaryColorId.value = colorItem.id
   primaryColorStore.$patch((state) => {
-    state.isCustomPrimaryColor = false
+    state.isCustomPrimaryColor = 'N'
     state.primaryColorId = colorItem.id
   })
 }
 
 const selectCustomColor = (value: string) => {
-  isCustomPrimaryColor.value = true
-  customPrimaryColor.value = value
   primaryColorStore.$patch((state) => {
-    state.isCustomPrimaryColor = true
+    state.isCustomPrimaryColor = 'Y'
     state.customPrimaryColor = value
   })
 }
@@ -76,13 +68,10 @@ const getConfig = () => {
 }
 
 const reset = () => {
-  primaryColorId.value = appConfigDefault.primaryColorId
-  isCustomPrimaryColor.value = appConfigDefault.isCustomPrimaryColor
-  customPrimaryColor.value = appConfigDefault.customPrimaryColor
   primaryColorStore.$patch((state) => {
-    state.primaryColorId = primaryColorId.value
-    state.isCustomPrimaryColor = isCustomPrimaryColor.value
-    state.customPrimaryColor = customPrimaryColor.value
+    state.primaryColorId = appConfigDefault.primaryColorId
+    state.isCustomPrimaryColor = appConfigDefault.isCustomPrimaryColor
+    state.customPrimaryColor = appConfigDefault.customPrimaryColor
   })
 }
 

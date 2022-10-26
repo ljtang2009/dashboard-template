@@ -1,9 +1,9 @@
-import { request } from '@/utils/request';
-import { devUrlPrefix as urlPrefix } from '@/api/common';
+import { request, requestOptions } from '@/utils/request';
+import { moduleName as parentModuleName } from '@/api/admin/constant';
 
 const moduleName = '/app-config';
 function _getUrl(value: string): string {
-  return `${urlPrefix}${moduleName}${value}`;
+  return `${parentModuleName}${moduleName}${value}`;
 }
 const saveUrl = _getUrl('/save');
 const getUrl = _getUrl('/get');
@@ -24,9 +24,11 @@ export function save(data: object) {
  * 读取配置
  * @returns
  */
-export function get() {
+export function get(data?: object, options?: requestOptions) {
   return request({
     url: getUrl,
     method: 'get',
+    data: data,
+    options,
   });
 }

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { resolve } from 'path';
-const dbFilePath = resolve(__dirname, '../../db/main.db');
+const dbFilePath = resolve(process.cwd(), './db/main.db');
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 export const DataSourceModule = TypeOrmModule.forRoot({

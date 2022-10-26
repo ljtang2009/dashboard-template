@@ -9,7 +9,7 @@ async function launchServer() {
   const port = await getPort({
     port: previewPort,
   });
-  app.use(express.static(path.resolve(__dirname, '../dist')));
+  app.use(express.static(path.resolve(process.cwd(), './dist')));
   app.listen(port, () => {
     const url = `http://127.0.0.1:${port}`;
     open(url);

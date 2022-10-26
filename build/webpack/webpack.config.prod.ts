@@ -10,7 +10,7 @@ import path from 'path';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-const webpackBaseConfig = getBaseConfiguration({ envPath: path.resolve(__dirname, '../../.env') });
+const webpackBaseConfig = getBaseConfiguration({ envPath: path.resolve(process.cwd(), './.env') });
 
 async function getConfig() {
   return merge(webpackBaseConfig, {

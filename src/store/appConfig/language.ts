@@ -1,11 +1,9 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { getAppConfig } from '@/config/appConfig';
 import languages from '@/config/languages';
 
 export default defineStore('language', () => {
-  const appConfig = getAppConfig();
-  const languageId = ref<string>(appConfig['languageId']);
+  const languageId = ref<string>('');
   const language = computed(() => {
     let result = languages[0];
     for (const item of languages) {

@@ -83,7 +83,7 @@ export class Logger implements LoggerService {
       ),
       transports: [
         new winston.transports.File({
-          filename: path.resolve(__dirname, `../.log/${dayjs().format('YYYY-MM-DD')}.log`),
+          filename: path.resolve(process.cwd(), `./src-api/.log/${dayjs().format('YYYY-MM-DD')}.log`),
         }),
       ],
     });

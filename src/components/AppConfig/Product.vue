@@ -9,7 +9,7 @@
         </n-form-item>
         <n-form-item :label="$t('appConfig.modules.product.logo')">
           <n-upload v-if="showLogoUpload" v-model:file-list="logoList" :accept="logoAcceptTypes.join(',')" :max="1"
-            action="/dev/logo/save" :list-type="logoUploadListType" @before-upload="beforeUploadLogo"
+            action="/api/admin/logo/save" :list-type="logoUploadListType" @before-upload="beforeUploadLogo"
             @preview="handlePreviewLogo" @change="handleLogoChange" @finish="handleLogoFinish">
             <n-upload-dragger>
               <div>
@@ -35,7 +35,7 @@ import { UploadFileInfo, useMessage } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
 import { FileUploadFilled } from '@vicons/material'
 import { getFileTypeListByAcceptTypes } from '@/utils/input'
-import { reset as resetLogo } from '@/api/dev/logo'
+import { reset as resetLogo } from '@/api/admin/logo'
 import useProductStore from '@/store/appConfig/product'
 import appConfigDefault from '@/config/appConfigDefault.json'
 
@@ -53,7 +53,7 @@ const updateProductName = (value: string) => {
   })
 }
 
-const logoUrl = '/dev/logo/getStream'
+const logoUrl = '/api/admin/logo/getStream'
 const logoList = ref([
   {
     id: 'logo',

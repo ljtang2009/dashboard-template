@@ -1,6 +1,6 @@
 import { createI18n, I18n, VueMessageType } from 'vue-i18n';
 import { nextTick } from 'vue';
-import { getAppConfig } from '@/config/appConfig';
+import useLanguageStore from '@/store/appConfig/language';
 import languages from '@/config/languages';
 import { LocaleMessage } from '@intlify/core-base';
 import { getDiscreteApi } from '@/utils/discreteApi';
@@ -12,10 +12,10 @@ async function loadLocaleFile(locale: string) {
 let i18nInstance: I18n;
 // 创建多语言实例
 export async function setupI18n() {
-  const appConfig = getAppConfig();
+  const languageStore = useLanguageStore();
   let locale = 'zh-cn';
   for (const item of languages) {
-    if (item.id === appConfig['languageId']) {
+    if (item.id === languageStore.languageId) {
       locale = item.i18nLocal;
       break;
     }

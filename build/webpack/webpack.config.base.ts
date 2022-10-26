@@ -26,14 +26,14 @@ function getConfiguration(options?: ConfigurationOptions): Configuration {
   }
 
   return {
-    context: path.resolve(__dirname, '../../src'),
+    context: path.resolve(process.cwd(), './src'),
     entry: {
-      app: path.resolve(__dirname, '../../src/app.ts'),
+      app: path.resolve(process.cwd(), './src/app.ts'),
     },
     output: {
       clean: true,
       filename: 'script/[name].[contenthash].js',
-      path: path.resolve(__dirname, '../../dist'),
+      path: path.resolve(process.cwd(), './dist'),
     },
     module: {
       rules: [
@@ -98,7 +98,7 @@ function getConfiguration(options?: ConfigurationOptions): Configuration {
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.vue', '.json'],
       alias: {
-        '@': path.resolve(__dirname, '../../src'),
+        '@': path.resolve(process.cwd(), './src'),
       },
     },
     optimization: {
@@ -116,7 +116,7 @@ function getConfiguration(options?: ConfigurationOptions): Configuration {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, '../../src/index.ejs'),
+        template: path.resolve(process.cwd(), './src/index.ejs'),
         templateParameters: {
           title: 'loading',
         },
@@ -131,7 +131,7 @@ function getConfiguration(options?: ConfigurationOptions): Configuration {
       }),
       new PrintDatePlugin(),
       new CopyPlugin({
-        patterns: [path.resolve(__dirname, '../../public')],
+        patterns: [path.resolve(process.cwd(), './public')],
       }),
       AutoImport({
         imports: [

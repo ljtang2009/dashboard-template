@@ -1,5 +1,5 @@
 import { request } from '@/utils/request';
-import { urlPrefix } from '@/api/common';
+import { urlPrefix } from '@/api/constant';
 
 const moduleName = '/user';
 function _getUrl(value: string): string {

@@ -4,7 +4,7 @@ import path from 'path';
 import fs from 'fs-extra';
 
 export default async () => {
-  const logoPath = path.resolve(__dirname, '../../src/assets/logo.png');
-  const faviconPath = path.resolve(__dirname, '../../public/logo.png');
+  const logoPath = path.resolve(process.cwd(), './src/assets/logo.png');
+  const faviconPath = path.resolve(process.cwd(), './public/logo.png');
   await fs.copy(logoPath, faviconPath);
 };

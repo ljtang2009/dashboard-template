@@ -3,14 +3,18 @@ import { createDiscreteApi } from 'naive-ui';
 
 const { message } = createDiscreteApi(['message', 'dialog']);
 
-interface requestParams {
-  method?: 'post' | 'get';
-  url: string;
-  data?: object;
+export interface requestOptions {
   /**
    * 是否定制错误
    */
   isCustomError?: boolean;
+}
+
+interface requestParams {
+  method?: 'post' | 'get';
+  url: string;
+  data?: object;
+  options?: requestOptions;
 }
 
 function handleError(errorMessage: string) {
@@ -38,13 +42,15 @@ export function request(params: requestParams) {
         if (_data.code === 200) {
           resolve(_data.data);
         } else {
-          handleError(_data.message);
           reject(_data);
+          if (!params.options || !params.options.isCustomError) {
+            handleError(_data.message);
+          }
         }
       })
       .catch((error) => {
         reject(error);
-        if (!params.isCustomError) {
+        if (!params.options || !params.options.isCustomError) {
           handleError(error.message);
         }
       });

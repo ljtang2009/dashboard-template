@@ -1,12 +1,10 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { getAppConfig } from '@/config/appConfig';
 import Theme from '@/config/theme';
 import { useOsTheme } from 'naive-ui';
 
 export default defineStore('theme', () => {
-  const appConfig = getAppConfig();
-  const themeId = ref<string>(appConfig['themeId']);
+  const themeId = ref<string>('');
   const isDark = computed(() => {
     let result = themeId.value === Theme.dark;
     if (themeId.value === Theme.os) {

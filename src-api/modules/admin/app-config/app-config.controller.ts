@@ -8,7 +8,7 @@ export class AppConfigController {
 
   @Get('get')
   protected async get() {
-    return await this.appConfigService.read();
+    return await this.appConfigService.get();
   }
 
   @Post('save')

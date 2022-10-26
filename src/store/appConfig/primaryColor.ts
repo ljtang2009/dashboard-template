@@ -1,17 +1,15 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import primaryColors from '@/config/primaryColors';
-import { getAppConfig } from '@/config/appConfig';
 
 export default defineStore('primaryColor', () => {
-  const appConfig = getAppConfig();
-  const primaryColorId = ref<string>(appConfig['primaryColorId']);
-  const isCustomPrimaryColor = ref<boolean>(appConfig['isCustomPrimaryColor']);
-  const customPrimaryColor = ref<string>(appConfig['customPrimaryColor']);
+  const primaryColorId = ref<string>('');
+  const isCustomPrimaryColor = ref<string>('');
+  const customPrimaryColor = ref<string>('');
 
   const primaryColor = computed(() => {
     let result = '';
-    if (isCustomPrimaryColor.value) {
+    if (isCustomPrimaryColor.value === 'Y') {
       result = customPrimaryColor.value;
     } else {
       for (const item of primaryColors) {

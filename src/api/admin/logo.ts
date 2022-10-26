@@ -1,9 +1,9 @@
 import { request } from '@/utils/request';
-import { devUrlPrefix as urlPrefix } from '@/api/common';
+import { moduleName as parentModuleName } from '@/api/admin/constant';
 
 const moduleName = '/logo';
 function getUrl(value: string): string {
-  return `${urlPrefix}${moduleName}${value}`;
+  return `${parentModuleName}${moduleName}${value}`;
 }
 const resetUrl = getUrl('/reset');
 
