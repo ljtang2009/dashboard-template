@@ -108,3 +108,9 @@ dist
 
 # 日志
 .log
+
+# src-api 编译后的文件
+dist-api
+
+# src-electron 编译后的文件
+dist-electron

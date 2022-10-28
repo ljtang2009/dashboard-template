@@ -2,8 +2,8 @@
   <div ref="userLayout" class="user-layout">
     <div :class="boxClass">
       <n-space align="center" justify="center" class="title">
-        <img class="logo" src="@/assets/logo.png" />
-        <n-text class="product-name" strong>{{productStore.productName}}</n-text>
+        <img class="logo" :src="`/api/admin/logo/getStream?${productStore.logoTimestamp}`" />
+        <n-text class="product-name" strong>{{ productStore.productName }}</n-text>
       </n-space>
       <router-view />
     </div>

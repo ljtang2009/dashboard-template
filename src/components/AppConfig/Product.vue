@@ -1,6 +1,6 @@
 <template>
   <config-item>
-    <template #title>{{$t('appConfig.modules.product.title')}}</template>
+    <template #title>{{ $t('appConfig.modules.product.title') }}</template>
     <template #content>
       <n-form :show-feedback="false" label-placement="left" show-require-mark>
         <n-form-item :label="$t('appConfig.modules.product.name')" path="productName">
@@ -15,7 +15,7 @@
               <div>
                 <n-icon size="2rem" :component="FileUploadFilled" />
               </div>
-              <n-text>{{$t('appConfig.modules.product.dragOrClickToUpload')}}</n-text>
+              <n-text>{{ $t('appConfig.modules.product.dragOrClickToUpload') }}</n-text>
             </n-upload-dragger>
           </n-upload>
           <n-image v-show="false" ref="previewLogoImage" :src="previewLogoUrl" />
@@ -59,7 +59,7 @@ const logoList = ref([
     id: 'logo',
     name: 'logo.png',
     status: 'finished',
-    url: `${logoUrl}?${(new Date()).valueOf()}`
+    url: `${logoUrl}?${productStore.logoTimestamp}`
   },
 ])
 
@@ -135,7 +135,10 @@ function handleLogoChange(data: { fileList: UploadFileInfo[] }) {
 }
 
 function handleLogoFinish({ file }: { file: UploadFileInfo }) {
-  const _logoUrl = `${logoUrl}?${(new Date()).valueOf()}`
+  productStore.$patch((state) => {
+    state.logoTimestamp = new Date().valueOf()
+  })
+  const _logoUrl = `${logoUrl}?${productStore.logoTimestamp}`
   file.url = _logoUrl
   setFavicon(_logoUrl)
 }
@@ -150,8 +153,10 @@ const getConfig = () => {
 
 const reset = async () => {
   model.value.productName = appConfigDefault.productName
-
-  const _logoUrl = `${logoUrl}?${(new Date()).valueOf()}`
+  productStore.$patch((state) => {
+    state.logoTimestamp = new Date().valueOf()
+  })
+  const _logoUrl = `${logoUrl}?${productStore.logoTimestamp}`
   updateProductName(appConfigDefault.productName)
   await resetLogo()
   showLogoUpload.value = false

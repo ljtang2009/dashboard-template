@@ -39,6 +39,7 @@ module.exports = {
 
     /* #region @type-eslint rules */
     '@typescript-eslint/prefer-optional-chain': 'off',
+    '@typescript-eslint/no-require-imports': 'off',
     /* #endregion */
   },
 };

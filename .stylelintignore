@@ -1,2 +1,4 @@
-dist/**/*.css
 node_modules/**/*.*
+dist/**/*.css
+dist-api/**/*.*
+dist-electron/**/*.*

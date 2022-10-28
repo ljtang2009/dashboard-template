@@ -4,12 +4,12 @@ import { resolve } from 'path';
 
 @Injectable()
 export class LogoService {
-  public logoPath = resolve(process.cwd(), './src/assets/logo.png');
+  public logoPath = resolve(process.cwd(), './public-electron/logo.png');
 
   public contentType = 'image/png';
 
   // const faviconPath = path.resolve(process.cwd(), './public/logo.png'); // favicon 文件
-  private logoDefaultPath = resolve(process.cwd(), './src/assets/logo.default.png');
+  private logoDefaultPath = resolve(process.cwd(), './public-electron/logo.default.png');
 
   public async saveByBuffer(buffer: Buffer) {
     // 如果改favicon，会造成页面刷新。（添加watch ignore无效）

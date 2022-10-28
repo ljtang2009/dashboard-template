@@ -74,6 +74,11 @@ export class Logger implements LoggerService {
     });
   }
   private record = (params: { level: LogLevel; message: any; optionalParams: any[] }) => {
+    const loggerFileName = path.resolve(
+      process.cwd(),
+      process.env['ELECTRON_IS_PACKAGED'] === 'Y' ? './' : './src-api',
+      `./.log/${dayjs().format('YYYY-MM-DD')}.log`,
+    );
     const logger = winston.createLogger({
       format: combine(
         timestamp(),
@@ -83,7 +88,7 @@ export class Logger implements LoggerService {
       ),
       transports: [
         new winston.transports.File({
-          filename: path.resolve(process.cwd(), `./src-api/.log/${dayjs().format('YYYY-MM-DD')}.log`),
+          filename: loggerFileName,
         }),
       ],
     });

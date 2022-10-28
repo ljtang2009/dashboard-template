@@ -3,7 +3,7 @@
     :date-locale="language.dateLocale" abstract>
     <n-loading-bar-provider>
       <n-message-provider>
-        <app-config v-if="!isProd" />
+        <app-config />
         <router-view />
       </n-message-provider>
     </n-loading-bar-provider>
@@ -11,38 +11,22 @@
   </n-config-provider>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue';
+<script setup lang="ts">
+import { computed } from 'vue';
 import AppConfig from '@/components/AppConfig/AppConfig.vue';
 import useLanguageStore from '@/store/appConfig/language'
 import { setI18nLanguage } from '@/i18n'
 import { getThemeOverrides, getTheme } from '@/utils/themeConfigProvider';
 
-export default defineComponent({
-  components: {
-    AppConfig
-  },
-  setup() {
-    const isProd = process.env['NODE_ENV'] === 'production'
+const themeOverrides = computed(getThemeOverrides)
 
-    const themeOverrides = computed(getThemeOverrides)
+const theme = computed(getTheme)
 
-    const theme = computed(getTheme)
+const languageStore = useLanguageStore()
 
-    const languageStore = useLanguageStore()
+const language = computed(() => languageStore.language)
 
-    const language = computed(() => languageStore.language)
-
-    languageStore.$subscribe((_mutation, state) => {
-      setI18nLanguage(state.languageId)
-    })
-
-    return {
-      isProd,
-      themeOverrides,
-      theme,
-      language
-    }
-  },
+languageStore.$subscribe((_mutation, state) => {
+  setI18nLanguage(state.languageId)
 })
 </script>

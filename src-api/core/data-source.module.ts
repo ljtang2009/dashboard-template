@@ -1,10 +1,9 @@
 import 'reflect-metadata';
-import { resolve } from 'path';
-const dbFilePath = resolve(process.cwd(), './db/main.db');
+import { dbFilePath } from '@src-api/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 export const DataSourceModule = TypeOrmModule.forRoot({
-  type: 'better-sqlite3',
+  type: 'sqlite',
   database: dbFilePath,
   autoLoadEntities: true,
   logging: true,
