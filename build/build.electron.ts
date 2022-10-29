@@ -1,7 +1,9 @@
+import { initEnv } from '@build/utils/env';
+initEnv();
 import { build, Platform } from 'electron-builder';
 import { resolve } from 'path';
-import { removeSync } from 'fs-extra';
 import { parseArgs } from '@build/utils/command';
+import { GenericServerOptions } from 'builder-util-runtime';
 
 import os from 'os';
 const platform = os.platform();
@@ -16,17 +18,11 @@ const platformParam = processArgs['platform'];
 if (platformParam) {
   buildTarget.isWin = platformParam === 'windows';
   buildTarget.isMac = platformParam === 'mac';
-} else {
-  // TODO 测试
-  console.log('未指定platform');
 }
 
 if (!buildTarget.isWin && !buildTarget.isMac) {
   throw new Error('只支持Windows和Mac');
 }
-
-// TODO 测试
-console.log(buildTarget);
 
 let subBuildDir = '';
 let buildTargetString;
@@ -39,7 +35,11 @@ if (buildTarget.isWin) {
 }
 
 const distDir = resolve(process.cwd(), `./dist-electron/${subBuildDir}`);
-removeSync(distDir);
+
+const publishServerOptions: GenericServerOptions = {
+  provider: 'generic',
+  url: `http://127.0.0.1:${process.env['ELECTRON_UPDATE_SERVER_PORT']}`,
+};
 
 const options = {
   appId: 'com.tanglijin.dashboard-template',
@@ -51,6 +51,7 @@ const options = {
   },
   win: {
     target: 'nsis',
+    publish: { ...publishServerOptions, url: publishServerOptions.url + '/windows' },
   },
   nsis: {
     oneClick: false,
@@ -61,6 +62,7 @@ const options = {
   },
   mac: {
     darkModeSupport: true,
+    publish: { ...publishServerOptions, url: publishServerOptions.url + '/mac' },
   },
   extraFiles: [
     // 前端编译后文件
@@ -79,6 +81,7 @@ const options = {
 build({
   targets: buildTargetString,
   config: options,
+  publish: 'always',
 })
   .then((result) => {
     console.log(JSON.stringify(result));

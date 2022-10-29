@@ -1,4 +1,4 @@
-{
+export default {
   "primaryColorId": "004",
   "isCustomPrimaryColor": "N",
   "customPrimaryColor": "#FF69B4",

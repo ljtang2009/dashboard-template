@@ -1,10 +1,10 @@
+import { initEnv } from '@build/utils/env';
+initEnv();
 import getPort from 'get-port';
 import config from '@build/webpack/webpack.config.dev';
 import { webpack } from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import { devServerPort,  mockServerUrl } from '@build/config';
-import { apiServerPort } from '@src-api/config';
-import { bootstrap as launchApiServer} from '@src-api/main'
+import { bootstrap as launchApiServer } from '@src-api/main';
 import bootstrap from '@build/core/bootstrap';
 import detectApiServer from '@build/utils/detect-api-server';
 import { parseArgs } from '@build/utils/command';
@@ -21,9 +21,9 @@ const compiler = webpack(config);
 const runServer = async () => {
   await bootstrap();
 
-  let apiServerUrl = mockServerUrl;
+  let apiServerUrl = process.env['MOCK_SERVER_URL'];
   if (!isMockApiServer) {
-    let _apiServerPort = apiServerPort;
+    let _apiServerPort = process.env['API_SERVER_PORT'];
     if (!isManualApiServer) {
       const { port: _apiServerPort } = await launchApiServer();
     } else {
@@ -42,10 +42,10 @@ const runServer = async () => {
     hot: true, // 启用 webpack 的 热模块替换 特性
     open: true,
     port: await getPort({
-      port: devServerPort,
+      port: parseInt(process.env['DEV_SERVER_PORT']!, 10),
     }),
     proxy: {
-      '/api': apiServerUrl,
+      '/api': apiServerUrl!,
     },
   };
 

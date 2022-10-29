@@ -1,3 +1,5 @@
+import { initEnv } from '@build/utils/env';
+initEnv();
 import getConfig from '@build/webpack/webpack.config.prod';
 import webpack from 'webpack';
 import bootstrap from '@build/core/bootstrap';

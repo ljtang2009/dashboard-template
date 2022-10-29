@@ -6,7 +6,8 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@src-api/*": ["*"]
+      "@src-api/*": ["*"],
+      "@build/*": ["../build/*"]
     },
     "outDir": "../dist-api",
 
@@ -28,5 +29,6 @@
     "pretty": true,
     "require": ["tsconfig-paths/register"]
   },
-  "include": ["**/*"]
+  "include": ["**/*"],
+  "exclude": ["../dist-api/**/*", "../build/**/*"]
 }

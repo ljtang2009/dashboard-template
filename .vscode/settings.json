@@ -16,6 +16,9 @@
   "[vue]": {
     "editor.defaultFormatter": "Vue.volar"
   },
+  "files.associations": {
+    "*.env.default": "dotenv"
+  },
   "files.exclude": {
     ".history": true
   },
@@ -26,5 +29,8 @@
   "i18n-ally.keystyle": "nested",
   "i18n-ally.enabledParsers": ["ts", "js"],
   "i18n-ally.ignoreFiles": ["**/index.ts", "**/utils.ts"],
-  "todo-tree.tree.scanMode": "workspace only"
+  "todo-tree.tree.scanMode": "workspace only",
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }

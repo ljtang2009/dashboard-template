@@ -37,7 +37,7 @@ import { FileUploadFilled } from '@vicons/material'
 import { getFileTypeListByAcceptTypes } from '@/utils/input'
 import { reset as resetLogo } from '@/api/admin/logo'
 import useProductStore from '@/store/appConfig/product'
-import appConfigDefault from '@/config/appConfigDefault.json'
+import appConfigDefault from '@/config/appConfigDefault'
 
 const message = useMessage()
 const { t } = useI18n()

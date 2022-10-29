@@ -1,13 +1,10 @@
-import getBaseConfiguration from '@build/webpack/webpack.config.base';
+import webpackBaseConfig from '@build/webpack/webpack.config.base';
 import {
   Configuration,
   //  WatchIgnorePlugin
 } from 'webpack';
 import { merge } from 'webpack-merge';
-import path from 'path';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-
-const webpackBaseConfig = getBaseConfiguration({ envPath: path.resolve(process.cwd(), './.env.dev') });
 
 const config: Configuration = merge(webpackBaseConfig, {
   mode: 'development',

@@ -1,32 +1,28 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    // Modules
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "./dist-build",
     "rootDir": "../",
     "baseUrl": ".",
     "paths": {
-      "@build/*": ["*"],
-      "@src-api/*": ["../src-api/*"]
+      "@src-electron-publish/*": ["*"],
+      "@src-api/*": ["../src-api/*"],
+      "@build/*": ["../build/*"],
     },
+    "outDir": "../dist-api",
 
-    //Emit
     "sourceMap": true,
 
-    // Interop Constraints
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
 
-    // Language and Environment
     "lib": ["es2021"],
-    "target": "es2021",
+    "target": "ES5",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
 
-    // Completeness
     "skipLibCheck": true
   },
   "ts-node": {
@@ -34,8 +30,5 @@
     "pretty": true,
     "require": ["tsconfig-paths/register"]
   },
-  "include": ["**/*", "../src-api/**/*"],
-  "exclude": [
-    "./dist-build/**/*"
-  ]
+  "include": ["**/*", "../src-api/**/*", "../build/**/*"]
 }

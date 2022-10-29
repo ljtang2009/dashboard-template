@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "api",
+      "name": "start:api",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "node",
@@ -18,6 +18,33 @@
       ],
       "args": ["${workspaceRoot}/src-api/main.debug.ts"],
       "env": { "TS_NODE_PROJECT": "${workspaceRoot}/src-api/tsconfig.json" },
+      "cwd": "${workspaceRoot}",
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "start:electron",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+      "args": ["./src-electron/main.js"]
+    },
+    {
+      "name": "electron-publish",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "${workspaceRoot}/node_modules/ts-node/register",
+        "-r",
+        "${workspaceFolder}/node_modules/tsconfig-paths/register"
+      ],
+      "args": ["${workspaceRoot}/src-electron-publish/main.debug.ts"],
+      "env": { "TS_NODE_PROJECT": "${workspaceRoot}/src-electron-publish/tsconfig.json" },
       "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart",
       "skipFiles": ["<node_internals>/**"],

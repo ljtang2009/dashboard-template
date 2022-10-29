@@ -1,4 +1,4 @@
-import { dbFilePath } from '@src-api/config';
+import { resolve as pathResolve } from 'path'
 import sqlite3 from 'sqlite3';
 
 function run(db: sqlite3.Database, sql: string, param = {}) {
@@ -35,7 +35,7 @@ const sqlList = [
 export default function () {
   return new Promise<void>((resolve, reject) => {
     sqlite3.verbose();
-    const db = new sqlite3.Database(dbFilePath);
+    const db = new sqlite3.Database(pathResolve(process.cwd(), process.env['DB_FILE_Path']!));
     db.serialize(async () => {
       let existError = false;
       for (const sql of sqlList) {

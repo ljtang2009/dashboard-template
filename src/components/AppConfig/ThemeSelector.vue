@@ -25,7 +25,7 @@ export default {
 import ConfigItem from '@/components/AppConfig/ConfigItem.vue'
 import useThemeStore from '@/store/appConfig/theme'
 import ThemeType from '@/config/theme';
-import appConfigDefault from '@/config/appConfigDefault.json'
+import appConfigDefault from '@/config/appConfigDefault'
 // import { LightModeFilled, ModeNightRound, DesktopWindowsFilled } from '@vicons/material'
 
 const themeStore = useThemeStore()

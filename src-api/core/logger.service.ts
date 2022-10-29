@@ -14,6 +14,7 @@ enum LogLevel {
 
 export class Logger implements LoggerService {
   private consoleLogger = new ConsoleLogger();
+  public constructor(private programDir: string = './src-api') {}
   /**
    * Write a 'log' level log.
    */
@@ -76,7 +77,7 @@ export class Logger implements LoggerService {
   private record = (params: { level: LogLevel; message: any; optionalParams: any[] }) => {
     const loggerFileName = path.resolve(
       process.cwd(),
-      process.env['ELECTRON_IS_PACKAGED'] === 'Y' ? './' : './src-api',
+      process.env['ELECTRON_IS_PACKAGED'] === 'Y' ? './' : this.programDir,
       `./.log/${dayjs().format('YYYY-MM-DD')}.log`,
     );
     const logger = winston.createLogger({

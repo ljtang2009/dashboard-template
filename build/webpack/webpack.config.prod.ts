@@ -1,23 +1,19 @@
-import getBaseConfiguration from '@build/webpack/webpack.config.base';
+import webpackBaseConfig from '@build/webpack/webpack.config.base';
 import { ProgressPlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { merge } from 'webpack-merge';
 import ESLintPlugin from 'eslint-webpack-plugin';
-import { analyzerPort } from '@build/config';
 import getPort from 'get-port';
 import StylelintPlugin from 'stylelint-webpack-plugin';
-import path from 'path';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-
-const webpackBaseConfig = getBaseConfiguration({ envPath: path.resolve(process.cwd(), './.env') });
 
 async function getConfig() {
   return merge(webpackBaseConfig, {
     mode: 'production',
     plugins: [
       new BundleAnalyzerPlugin({
-        analyzerPort: await getPort({ port: analyzerPort }),
+        analyzerPort: await getPort({ port: parseInt(process.env['ANALYZER_PORT']!, 10) }),
         openAnalyzer: false,
       }),
       new ProgressPlugin(),

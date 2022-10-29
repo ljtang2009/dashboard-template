@@ -15,7 +15,7 @@ export default {
 import ConfigItem from '@/components/AppConfig/ConfigItem.vue'
 import languages from '@/config/languages'
 import useLanguageStore from '@/store/appConfig/language'
-import appConfigDefault from '@/config/appConfigDefault.json'
+import appConfigDefault from '@/config/appConfigDefault'
 
 const languageStore = useLanguageStore()
 const options = languages.map(item => { return { label: item.name, value: item.id } })

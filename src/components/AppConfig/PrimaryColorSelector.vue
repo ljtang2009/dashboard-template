@@ -41,7 +41,7 @@ import ConfigItem from '@/components/AppConfig/ConfigItem.vue'
 import { CheckTwotone } from '@vicons/material'
 import primaryColors, { colorType as primaryColorType } from '@/config/primaryColors'
 import usePrimaryColorStore from '@/store/appConfig/primaryColor'
-import appConfigDefault from '@/config/appConfigDefault.json'
+import appConfigDefault from '@/config/appConfigDefault'
 
 const primaryColorStore = usePrimaryColorStore()
 

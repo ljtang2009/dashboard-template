@@ -1,5 +1,5 @@
 import { get as getAppConfig } from '@/api/admin/app-config';
-import appConfigDefault from '@/config/appConfigDefault.json';
+import appConfigDefault from '@/config/appConfigDefault';
 import useLanguageStore from '@/store/appConfig/language';
 import usePrimaryColorStore from '@/store/appConfig/primaryColor';
 import useThemeStore from '@/store/appConfig/theme';

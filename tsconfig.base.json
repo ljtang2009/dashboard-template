@@ -17,6 +17,8 @@
     "removeComments": true,
     "sourceMap": true,
 
+    "allowJs": true,
+
     "composite": true
   }
 }
