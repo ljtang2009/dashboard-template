@@ -114,3 +114,9 @@ dist-api
 
 # src-electron 编译后的文件
 dist-electron
+
+# electron 加压路径
+unpacked-electron
+
+# .env对应的json，因为electron打包后不能读取.env，所有要先自动生成json
+src-utils/env.json

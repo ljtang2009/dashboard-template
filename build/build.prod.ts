@@ -1,4 +1,4 @@
-import { initEnv } from '@build/utils/env';
+import { initEnv } from '@src-utils/env';
 initEnv();
 import getConfig from '@build/webpack/webpack.config.prod';
 import webpack from 'webpack';

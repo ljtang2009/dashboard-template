@@ -1,7 +1,10 @@
-import { initEnv } from '@build/utils/env';
-initEnv();
-import { build, Platform } from 'electron-builder';
+import { outputJsonSync } from 'fs-extra';
 import { resolve } from 'path';
+import { initEnv } from '@src-utils/env';
+const env = initEnv();
+// 写入配置， 供electron读取，因为electron打包后不能读取.env
+outputJsonSync(resolve(process.cwd(), './src-utils/env.json'), env, { spaces: 2 })
+import { build, Platform } from 'electron-builder';
 import { parseArgs } from '@build/utils/command';
 import { GenericServerOptions } from 'builder-util-runtime';
 
@@ -70,10 +73,15 @@ const options = {
       from: resolve(process.cwd(), './dist'),
       to: 'dist',
     },
-    // 前端静态文件
+    // api静态文件
     {
-      from: resolve(process.cwd(), './public-electron'),
-      to: 'public-electron',
+      from: resolve(process.cwd(), './public-api'),
+      to: 'public-api',
+    },
+    // api内置静态文件
+    {
+      from: resolve(process.cwd(), './public-api-build-in'),
+      to: 'public-api-build-in',
     },
   ],
 };

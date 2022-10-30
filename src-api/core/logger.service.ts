@@ -1,7 +1,11 @@
 import { LoggerService, ConsoleLogger } from '@nestjs/common';
 import winston, { format } from 'winston';
+const { app } = require('electron');
 import path from 'path';
 import dayjs from 'dayjs';
+import Transport from 'winston-transport';
+import fs from 'fs-extra'
+import os from 'os'
 const { combine, timestamp, printf } = format;
 
 enum LogLevel {
@@ -12,9 +16,24 @@ enum LogLevel {
   debug = 'debug',
 }
 
+interface FileTransportOptions extends Transport.TransportStreamOptions {
+  filename: string;
+}
+
+class FileTransport extends Transport {
+  public constructor(private opts: FileTransportOptions) {
+    super(opts);
+  }
+  public override async log(info: any, callback: () => void) {
+    await fs.ensureFile(this.opts.filename)
+    await fs.appendFile(this.opts.filename, `${info.timestamp} ${info.level}: ${info.message}` + os.EOL)
+    callback()
+  }
+}
+
 export class Logger implements LoggerService {
   private consoleLogger = new ConsoleLogger();
-  public constructor(private programDir: string = './src-api') {}
+  public constructor(private programDir: string = './src-api') { }
   /**
    * Write a 'log' level log.
    */
@@ -77,7 +96,7 @@ export class Logger implements LoggerService {
   private record = (params: { level: LogLevel; message: any; optionalParams: any[] }) => {
     const loggerFileName = path.resolve(
       process.cwd(),
-      process.env['ELECTRON_IS_PACKAGED'] === 'Y' ? './' : this.programDir,
+      app && app.isPackaged ? './' : this.programDir,
       `./.log/${dayjs().format('YYYY-MM-DD')}.log`,
     );
     const logger = winston.createLogger({
@@ -88,9 +107,10 @@ export class Logger implements LoggerService {
         }),
       ),
       transports: [
-        new winston.transports.File({
+        // 自定义日志文件传输。内置的winston.transports.File在electron更新的时候有权限问题。
+        new FileTransport({
           filename: loggerFileName,
-        }),
+        })
       ],
     });
     let message = '';

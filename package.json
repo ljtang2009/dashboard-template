@@ -1,15 +1,17 @@
 {
   "name": "dashboard-template",
-  "version": "1.0.4",
+  "version": "1.0.24",
   "description": "A dashboard template.",
   "scripts": {
     "build:dev": "cross-env NODE_ENV=development ts-node --project build/tsconfig.json build/build.dev.ts",
     "build:prod": "npm run type-check && cross-env NODE_ENV=production ts-node --project build/tsconfig.json build/build.prod.ts",
     "preview": "ts-node --project build/tsconfig.json build/preview.ts",
     "start:api": "ts-node --project src-api/tsconfig.json src-api/main.debug.ts",
-    "build:api": "ts-node --project src-api/tsconfig.json src-api/clean-dist.ts && tsc --project src-api/tsconfig.json && tscpaths --project src-api/tsconfig.json --src src-api --out dist-api",
+    "build:api": "ts-node --project src-api/tsconfig.json src-api/clean-dist.ts && tsc --project src-api/tsconfig.json && tscpaths --project src-api/tsconfig.json --src ./src-api --out ./dist-api/src-api",
     "start:electron": "electron ./src-electron/main.js",
     "build:electron": "ts-node --project build/tsconfig.json build/build.electron.ts",
+    "unpack:electron": "asar extract dist-electron/windows/win-unpacked/resources/app.asar unpacked-electron",
+    "start:electron-publish": "ts-node --project src-electron-publish/tsconfig.json src-electron-publish/main.debug.ts",
     "type-check": "vue-tsc --noEmit -p src/tsconfig.json --composite false",
     "lint": "npm run eslint && npm run stylelint:no-color",
     "eslint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts",
@@ -38,6 +40,8 @@
     "@babel/preset-typescript": "^7.18.6",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
+    "@dabh/eslint-config-populist": "^5.0.0",
+    "@electron/asar": "^3.2.1",
     "@types/dotenv-webpack": "^7.0.3",
     "@types/fs-extra": "^9.0.13",
     "@types/morgan": "^1.9.3",
@@ -125,11 +129,13 @@
     "pinia": "^2.0.22",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.7",
+    "semver": "^7.3.8",
     "simplex-noise": "^3.0.1",
     "sqlite3": "^5.1.2",
     "typeorm": "^0.3.10",
     "vue": "^3.2.39",
     "vue-i18n": "^9.2.2",
-    "winston": "^3.8.2"
+    "winston": "^3.8.2",
+    "winston-transport": "^4.5.0"
   }
 }

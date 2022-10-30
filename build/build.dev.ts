@@ -1,4 +1,4 @@
-import { initEnv } from '@build/utils/env';
+import { initEnv } from '@src-utils/env';
 initEnv();
 import getPort from 'get-port';
 import config from '@build/webpack/webpack.config.dev';

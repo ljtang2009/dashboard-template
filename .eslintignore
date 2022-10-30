@@ -2,3 +2,4 @@ dist
 **/CSSEffect/**/*.js
 dist-api
 dist-electron
+unpacked-electron

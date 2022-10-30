@@ -8,9 +8,9 @@
     "paths": {
       "@src-electron-publish/*": ["*"],
       "@src-api/*": ["../src-api/*"],
-      "@build/*": ["../build/*"],
+      "@src-utils/*": ["../src-utils/*"]
     },
-    "outDir": "../dist-api",
+    "outDir": "../dist-electron-publish",
 
     "sourceMap": true,
 
@@ -30,5 +30,5 @@
     "pretty": true,
     "require": ["tsconfig-paths/register"]
   },
-  "include": ["**/*", "../src-api/**/*", "../build/**/*"]
+  "include": ["**/*", "../src-api/**/*", "../src-utils/**/*"]
 }

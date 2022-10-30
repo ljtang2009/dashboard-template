@@ -1,4 +1,4 @@
-import { initEnv } from '@build/utils/env';
+import { initEnv } from '@src-utils/env';
 initEnv();
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@src-electron-publish/app.module';

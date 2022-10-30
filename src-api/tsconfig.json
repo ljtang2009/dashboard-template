@@ -3,11 +3,11 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
-    "rootDir": ".",
+    "rootDir": "../",
     "baseUrl": ".",
     "paths": {
       "@src-api/*": ["*"],
-      "@build/*": ["../build/*"]
+      "@src-utils/*": ["../src-utils/*"]
     },
     "outDir": "../dist-api",
 
@@ -29,6 +29,6 @@
     "pretty": true,
     "require": ["tsconfig-paths/register"]
   },
-  "include": ["**/*"],
-  "exclude": ["../dist-api/**/*", "../build/**/*"]
+  "include": ["**/*", "../src-utils/**/*", "../src-utils/**/*.json"],
+  "exclude": ["../dist-api/**/*"]
 }

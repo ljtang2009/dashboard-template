@@ -1,38 +1,107 @@
 const { autoUpdater } = require('electron-updater');
-const { logger } = require('@src-electron/utils/logger');
-autoUpdater.logger = logger;
+const semver = require('semver');
+// const { logger } = require('./logger');
+const { tempDir } = require('../config');
+const path = require('path');
+const { copy, pathExists, remove } = require('fs-extra');
+const { app } = require('electron');
 
-// // 监听'error'事件
-// autoUpdater.on('error', (err) => {
-//   console.log(err);
-// });
+const updateTempDir = path.resolve(tempDir, './update-temp');
+// TODO 附加日志应该更新后执行，否则日志文件会有权限问题
+// autoUpdater.logger = logger;
+autoUpdater.autoDownload = false;
+autoUpdater.autoInstallOnAppQuit = false;
+autoUpdater.autoRunAppAfterInstall = true;
+autoUpdater.disableWebInstaller = true;
 
-// // 监听'update-available'事件，发现有新版本时触发
-// autoUpdater.on('update-available', () => {
-//   console.log('found new version');
-// });
+/**
+ * 检查是否有更新
+ * @returns true 表示需要更新
+ */
+async function checkForUpdates() {
+  const updateCheckResult = await autoUpdater.checkForUpdates();
+  return semver.gt(updateCheckResult.updateInfo.version, autoUpdater.currentVersion.version);
+}
 
-// 默认会自动下载新版本，如果不想自动下载，设置autoUpdater.autoDownload = false
+exports.checkForUpdates = checkForUpdates;
 
-// // 监听'update-downloaded'事件，新版本下载完成时触发
-// autoUpdater.on('update-downloaded', () => {
-//   console.log('update-downloaded');
-//   // dialog
-//   //   .showMessageBox({
-//   //     type: 'info',
-//   //     title: '应用更新',
-//   //     message: '发现新版本，是否更新？',
-//   //     buttons: ['是', '否'],
-//   //   })
-//   //   .then((buttonIndex) => {
-//   //     if (buttonIndex.response == 0) {
-//   //       //选择是，则退出程序，安装新版本
-//   //       autoUpdater.quitAndInstall();
-//   //       app.quit();
-//   //     }
-//   //   });
-// });
+/**
+ * 下载更新
+ * @param {*} callbackProcess 显示进度
+ */
+async function downloadUpdate(callbackProcess) {
+  if (callbackProcess) {
+    autoUpdater.signals.progress((info) => {
+      callbackProcess(info);
+    });
+  }
+  await autoUpdater.downloadUpdate();
+}
 
-exports.update = function update() {
-  autoUpdater.checkForUpdatesAndNotify();
-};
+exports.downloadUpdate = downloadUpdate;
+
+/**
+ * 传输用户文件到临时文件夹
+ */
+async function transUserFilesToTempDir() {
+  const copyDirList = [
+    './.log',
+    './db',
+    './public-api',
+  ];
+  const copyFunctionList = [];
+  for (const copyDir of copyDirList) {
+    copyFunctionList.push(
+      (() => {
+        return new Promise((resolve, reject) => {
+          copy(path.resolve(process.cwd(), copyDir), path.resolve(updateTempDir, copyDir), (err) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve();
+            }
+          });
+        });
+      })(),
+    );
+  }
+  await Promise.all(copyFunctionList);
+}
+
+/**
+ * 传输用户文件从临时文件夹到App目录
+ */
+async function transUserFilesToAppDirFromTempDir() {
+  if (await pathExists(updateTempDir)) {
+    // 有目录表示需要传输
+    await copy(updateTempDir, process.cwd());
+    await remove(updateTempDir);
+  }
+}
+
+exports.transUserFilesToAppDirFromTempDir = transUserFilesToAppDirFromTempDir;
+
+/**
+ * 推出并更新
+ */
+async function quitAndInstall() {
+  if (app.isPackaged) {
+    await transUserFilesToTempDir();
+  }
+  // 传输用户数据到临时文件夹
+  autoUpdater.quitAndInstall();
+}
+
+exports.quitAndInstall = quitAndInstall;
+
+/**
+ * 一键更新
+ */
+async function oneKeyUpdate() {
+  if (await checkForUpdates()) {
+    await downloadUpdate();
+    await quitAndInstall();
+  }
+}
+
+exports.oneKeyUpdate = oneKeyUpdate;

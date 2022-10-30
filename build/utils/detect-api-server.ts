@@ -1,5 +1,3 @@
-import { initEnv } from '@build/utils/env';
-initEnv();
 import http from 'http';
 
 /**

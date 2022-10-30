@@ -1,4 +1,4 @@
-import { initEnv } from '@build/utils/env';
+import { initEnv } from '@src-utils/env';
 initEnv();
 import express from 'express';
 import path from 'path';
