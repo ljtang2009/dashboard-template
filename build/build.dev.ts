@@ -7,7 +7,7 @@ import WebpackDevServer from 'webpack-dev-server';
 import { bootstrap as launchApiServer } from '@src-api/main';
 import bootstrap from '@build/core/bootstrap';
 import detectApiServer from '@build/utils/detect-api-server';
-import { parseArgs } from '@build/utils/command';
+import { parseArgs } from '@src-utils/command';
 
 const processArgs = parseArgs();
 

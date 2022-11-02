@@ -16,7 +16,7 @@
         "-r",
         "${workspaceFolder}/node_modules/tsconfig-paths/register"
       ],
-      "args": ["${workspaceRoot}/src-api/main.debug.ts"],
+      "args": ["${workspaceRoot}/src-api/launch.dev.ts"],
       "env": { "TS_NODE_PROJECT": "${workspaceRoot}/src-api/tsconfig.json" },
       "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart",
@@ -24,15 +24,21 @@
       "console": "integratedTerminal"
     },
     {
+      "name": "start:dist-api",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/dist-api/launch.js"
+    },
+    {
       "name": "start:electron",
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
-      "args": ["./src-electron/main.js"]
+      "args": ["./src-electron/launch.js"]
     },
     {
-      "name": "electron-publish",
+      "name": "start:electron-publish",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "node",
@@ -43,7 +49,7 @@
         "-r",
         "${workspaceFolder}/node_modules/tsconfig-paths/register"
       ],
-      "args": ["${workspaceRoot}/src-electron-publish/main.debug.ts"],
+      "args": ["${workspaceRoot}/src-electron-publish/launch.dev.ts"],
       "env": { "TS_NODE_PROJECT": "${workspaceRoot}/src-electron-publish/tsconfig.json" },
       "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart",

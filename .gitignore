@@ -119,4 +119,11 @@ dist-electron
 unpacked-electron
 
 # .env对应的json，因为electron打包后不能读取.env，所有要先自动生成json
-src-utils/env.json
+src-utils/env.properties.json
+
+# 数据库ide临时文件
+*.db-shm
+*.db-wal
+
+# src-electron-publish 编译后的文件
+dist-electron-publish

@@ -1,0 +1,5 @@
+// 参考： https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint
+{
+  "MD033": { "allowed_elements": ["span"] },
+  "MD013": { "line_length": 200 }
+}

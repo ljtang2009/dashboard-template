@@ -33,7 +33,7 @@ class FileTransport extends Transport {
 
 export class Logger implements LoggerService {
   private consoleLogger = new ConsoleLogger();
-  public constructor(private programDir: string = './src-api') { }
+  public constructor(private programDir?: string) { }
   /**
    * Write a 'log' level log.
    */
@@ -94,11 +94,11 @@ export class Logger implements LoggerService {
     });
   }
   private record = (params: { level: LogLevel; message: any; optionalParams: any[] }) => {
-    const loggerFileName = path.resolve(
-      process.cwd(),
-      app && app.isPackaged ? './' : this.programDir,
-      `./.log/${dayjs().format('YYYY-MM-DD')}.log`,
-    );
+    const loggerFileName = `./.log/${dayjs().format('YYYY-MM-DD')}.log`;
+    let loggerFilePath = app && app.isPackaged ? path.resolve(process.cwd(), loggerFileName) : path.resolve(__dirname, '../', loggerFileName)
+    if (this.programDir && !(app && app.isPackaged)) {
+      loggerFilePath = path.resolve(this.programDir, loggerFileName)
+    }
     const logger = winston.createLogger({
       format: combine(
         timestamp(),
@@ -109,7 +109,7 @@ export class Logger implements LoggerService {
       transports: [
         // 自定义日志文件传输。内置的winston.transports.File在electron更新的时候有权限问题。
         new FileTransport({
-          filename: loggerFileName,
+          filename: loggerFilePath,
         })
       ],
     });

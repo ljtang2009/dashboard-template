@@ -5,6 +5,10 @@ import { AdminModule } from '@src-api/modules/admin/admin.module';
 import { UserModule } from '@src-api/modules/user/user.model';
 
 @Module({
-  imports: [StaticModule, DataSourceModule, AdminModule, UserModule],
+  imports: [
+    StaticModule,
+    DataSourceModule,
+    AdminModule,
+    UserModule],
 })
-export class AppModule {}
+export class AppModule { }

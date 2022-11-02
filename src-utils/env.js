@@ -1,9 +1,11 @@
 const { config } = require('dotenv');
 const { resolve } = require('path');
 const { pathExistsSync } = require('fs-extra');
-const { app } = require('electron');
-const envJSON = require('./env.json');
+const envJSON = require('./env.properties.json');
 
+/**
+ * @return {Recorder<string, string>}
+ */
 function initByJSON() {
   let envObj = {};
   for (const key in envJSON) {
@@ -15,6 +17,9 @@ function initByJSON() {
   return envObj;
 }
 
+/**
+ * @return {Recorder<string, string>}
+ */
 function initByENV() {
   let envObj = {};
   const envFileList = ['./.env.default', './.env.local'];
@@ -35,8 +40,14 @@ function initByENV() {
   return envObj;
 }
 
-function initEnv() {
-  return app && app.isPackaged ? initByJSON() : initByENV();
+/**
+ * 初始化环境变量
+ * @param { { json: boolean } } [option]
+ * @returns @return {Recorder<string, string>}
+ */
+function initEnv(option) {
+  const func = option && option.json ? initByJSON : initByENV;
+  return func();
 }
 
 exports.initEnv = initEnv;

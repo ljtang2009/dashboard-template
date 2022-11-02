@@ -1,4 +1,7 @@
-import { bootstrap } from '@src-api/main';
+import 'bytenode';
+import { initEnv } from '@src-utils/env';
+initEnv();
+import { bootstrap } from './main';
 
 const runServer = async () => {
   const { port } = await bootstrap();

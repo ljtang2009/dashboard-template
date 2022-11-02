@@ -6,11 +6,11 @@
     "rootDir": "../",
     "baseUrl": ".",
     "paths": {
-      "@src-electron-publish/*": ["*"],
+      "@preview/*": ["*"],
       "@src-api/*": ["../src-api/*"],
       "@src-utils/*": ["../src-utils/*"]
     },
-    "outDir": "../dist-electron-publish",
+    "outDir": "../dist-preview",
 
     "sourceMap": true,
 
@@ -30,6 +30,5 @@
     "pretty": true,
     "require": ["tsconfig-paths/register"]
   },
-  "include": ["**/*", "../src-api/**/*", "../src-utils/**/*", "../src-utils/**/*.json"],
-  "exclude": ["../dist-electron-publish/**/*"]
+  "include": ["**/*", "../src-api/**/*", "../src-utils/**/*"]
 }
