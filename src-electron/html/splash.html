@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <div>
+    <img style="width: 100px; height: 100px;" src="./logo.default.png" />
+    <div id="divMessage"></div>
+  </div>
+  <script type="text/javascript">
+    const divMessage = document.querySelector("#divMessage");
+    window.electronAPI.handleReceiveMessage('splash-window/show-message', parameters => {
+      divMessage.innerHTML = parameters.message
+    })
+  </script>
+</body>
+
+</html>

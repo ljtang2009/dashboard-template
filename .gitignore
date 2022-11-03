@@ -119,7 +119,7 @@ dist-electron
 unpacked-electron
 
 # .env对应的json，因为electron打包后不能读取.env，所有要先自动生成json
-src-utils/env.properties.json
+src-utils/env.properties.js
 
 # 数据库ide临时文件
 *.db-shm
@@ -127,3 +127,9 @@ src-utils/env.properties.json
 
 # src-electron-publish 编译后的文件
 dist-electron-publish
+
+# electron 编译临时目录
+temp-build-electron
+
+# 临时 ts 配置
+tsconfig.temp.json

@@ -15,6 +15,10 @@ const isEncrypt = !!processArgs['encrypt'];
     srcDirName,
     encrypt: isEncrypt,
     assetDirList,
+    haveLaunch: true,
+    bytenodeCompileFilter: (distFile) => {
+      return !distFile.endsWith('launch.js')
+    }
   })
   console.log('构建完成');
 })()

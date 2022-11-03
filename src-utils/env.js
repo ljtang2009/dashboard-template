@@ -1,17 +1,19 @@
 const { config } = require('dotenv');
-const { resolve } = require('path');
+const path = require('path');
 const { pathExistsSync } = require('fs-extra');
-const envJSON = require('./env.properties.json');
+const envPropertiesFile = './env.properties';
+const envProperties = require(envPropertiesFile);
+const fs = require('fs-extra');
 
 /**
  * @return {Recorder<string, string>}
  */
-function initByJSON() {
+function initByProperties() {
   let envObj = {};
-  for (const key in envJSON) {
-    if (envJSON.hasOwnProperty(key)) {
-      process.env[key] = envJSON[key];
-      envObj[key] = envJSON[key];
+  for (const key in envProperties) {
+    if (envProperties.hasOwnProperty(key)) {
+      process.env[key] = envProperties[key];
+      envObj[key] = envProperties[key];
     }
   }
   return envObj;
@@ -24,7 +26,7 @@ function initByENV() {
   let envObj = {};
   const envFileList = ['./.env.default', './.env.local'];
   for (const item of envFileList) {
-    const filePath = resolve(process.cwd(), item);
+    const filePath = path.resolve(process.cwd(), item);
     if (pathExistsSync(filePath)) {
       const result = config({
         path: filePath,
@@ -42,12 +44,19 @@ function initByENV() {
 
 /**
  * 初始化环境变量
- * @param { { json: boolean } } [option]
+ * @param { { useProperties: boolean } } [option]
  * @returns @return {Recorder<string, string>}
  */
-function initEnv(option) {
-  const func = option && option.json ? initByJSON : initByENV;
+exports.initEnv = function initEnv(option) {
+  const func = option && option.useProperties ? initByProperties : initByENV;
   return func();
-}
+};
 
-exports.initEnv = initEnv;
+/**
+ * 生成env.properties
+ * @returns { PromiseLike<void> }
+ */
+exports.writeEnvProperties = async function writeEnvProperties() {
+  const env = initByENV();
+  await fs.outputFile(path.resolve(__dirname, envPropertiesFile + '.js'), `module.exports = ${JSON.stringify(env)}`);
+};

@@ -4,3 +4,4 @@ dist-api
 dist-electron
 dist-electron-publish
 unpacked-electron
+temp-build-electron

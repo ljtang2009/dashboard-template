@@ -1,30 +1,44 @@
-if (require('electron-squirrel-startup')) app.quit();
 const { app, BrowserWindow } = require('electron');
-const { bootstrap } = require('../dist-api/src-api/main');
-const { oneKeyUpdate, transUserFilesToAppDirFromTempDir } = require('./utils/updater');
-const { logger } = require('./utils/logger');
+if (require('electron-squirrel-startup')) {
+  app.quit();
+  process.exit(0);
+}
+require('./core/limit-single-instance');
+require('./core/router');
+const { createWindow: createMainWindow } = require('./window/main.window');
+const { createWindow: createSplashWindow } = require('./window/splash.window');
 
-const createWindow = ({ port }) => {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-  });
-
-  // win.loadFile('index.html');
-  win.loadURL(`http://127.0.0.1:${port}`);
-};
+// /**
+//  * 初始化
+//  * @param { { showMessage: (message: string) => void } } messageHandle
+//  */
+// async function init(messageHandle) {
+//   messageHandle.showMessage('APP is loading resources.');
+//   const { logger } = require('./utils/logger');
+//   if (app.isPackaged) {
+//     messageHandle.showMessage("APP is loading user's files.");
+//     const { transUserFilesToAppDirFromTempDir } = require('./utils/updater');
+//     try {
+//       await transUserFilesToAppDirFromTempDir();
+//     } catch (error) {
+//       logger.error(error);
+//     }
+//   }
+// }
 
 app.whenReady().then(async () => {
-  if (app.isPackaged) {
-    try {
-      await transUserFilesToAppDirFromTempDir();
-    } catch (error) {
-      logger.error(error);
-    }
+  // createSplashWindow(init);
+  createSplashWindow();
+});
+
+app.on('activate', () => {
+  // macOS 应用通常即使在没有打开任何窗口的情况下也继续运行
+  if (BrowserWindow.getAllWindows().length === 0) {
+    // 打开主窗口
+    createMainWindow();
   }
-  const { port } = await bootstrap();
-  createWindow({ port });
-  setTimeout(() => {
-    oneKeyUpdate();
-  }, 1000);
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
 });
