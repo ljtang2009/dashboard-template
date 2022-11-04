@@ -116,7 +116,10 @@ exports.ugly = ugly;
 
 /**
  * 编译字节码
- * @param { { distDirPath: string, filter?: (distFile: string) => boolean } } option
+ * @param { Object } option
+ * @param { string } option.distDirPath
+ * @param { (distFile: string) => boolean } [option.filter]
+ * @param { boolean } [option.isElectron]
  * @returns { PromiseLike<void> }
  */
 async function bytenodeCompile(option) {
@@ -124,14 +127,13 @@ async function bytenodeCompile(option) {
   const compileFunctions = [];
   for (const distFile of distFileList) {
     if (distFile.toLowerCase().endsWith('.js') && (!option.filter || (option.filter && option.filter(distFile)))) {
-      // !distFile.endsWith('launch.js')
       compileFunctions.push(
         (() => {
           return new Promise((resolve, reject) => {
             bytenode
               .compileFile({
                 filename: distFile,
-                electron: true
+                electron: !!option.isElectron,
               })
               .then(() => {
                 return new Promise((removeResolve, removeReject) => {
@@ -187,12 +189,6 @@ async function copyDist(option) {
 
 /**
  * 编译tsc
- * @param { { distDirName: string, srcDirName: string, encrypt?: boolean, assetDirList?: Array<string> } } option
- * @returns { PromiseLike<void> }
- */
-
-/**
- * 编译tsc
  * @param { Object } option
  * @param { string } option.distDirName
  * @param { string } option.srcDirName
@@ -200,16 +196,17 @@ async function copyDist(option) {
  * @param { Array<string> } [option.assetDirList]
  * @param { boolean } [option.haveLaunch]
  * @param { (distFile: string) => boolean } [option.bytenodeCompileFilter] 字节码编译过滤器, 返回true表示需要编译字节码
- * @returns { PromiseLike<void> }
+ * @param { boolean } [option.isElectron] 是否是 electron 环境
+ * @returns { PromiseLike<{ distDirName: string, distDirPath: string }}> }
  */
 exports.compile = async function (option) {
   const distDirName = option.distDirName;
   const distDirPath = path.resolve(process.cwd(), `./${distDirName}`);
 
-  console.log('清理dist');
+  console.log(`清理${distDirName}`);
   await fs.remove(distDirPath);
 
-  console.log('生成env.properties.json');
+  console.log('生成env.properties');
   // 因为编译后不能读取.env, 所以要生成env.properties
   await writeEnvProperties();
 
@@ -221,14 +218,19 @@ exports.compile = async function (option) {
     await ugly({ distDirPath });
 
     console.log('编译字节码');
-    await bytenodeCompile({ distDirPath, filter: option.bytenodeCompileFilter });
+    await bytenodeCompile({ distDirPath, filter: option.bytenodeCompileFilter, isElectron: option.isElectron });
   }
 
   console.log('传输package.json');
   await copyPackage({ distDirPath });
 
   if (option.assetDirList && option.assetDirList.length > 0) {
-    console.log('传输dist');
+    console.log('传输assets');
     copyDist({ distDirPath, assetDirList: option.assetDirList });
   }
+
+  return {
+    distDirName,
+    distDirPath,
+  };
 };

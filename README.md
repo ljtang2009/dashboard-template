@@ -66,6 +66,10 @@ dashboard 应用模板。
 
 打包后的文件存于`dist-api`中。
 
+### 加密编译打包 electron
+
+`npm run build:electron encrypt`
+
 ## 反编译 asar
 
 `npm run unpack:electron`

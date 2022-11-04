@@ -5,30 +5,36 @@ if (require('electron-squirrel-startup')) {
 }
 require('./core/limit-single-instance');
 require('./core/router');
+const path = require('path');
 const { createWindow: createMainWindow } = require('./window/main.window');
-const { createWindow: createSplashWindow } = require('./window/splash.window');
+const { createWindow: createSplashWindow, showMessage: showSplashMessage } = require('./window/splash.window');
+const { transUserFilesToAppDirFromTempDir } = require('./utils/updater');
+const srcApiDirPath = app.isPackaged ? '../src-api/main' : path.resolve(process.cwd(), './dist-api/src-api/main');
+const { bootstrap: apiBootstrap } = require(srcApiDirPath);
 
-// /**
-//  * 初始化
-//  * @param { { showMessage: (message: string) => void } } messageHandle
-//  */
-// async function init(messageHandle) {
-//   messageHandle.showMessage('APP is loading resources.');
-//   const { logger } = require('./utils/logger');
-//   if (app.isPackaged) {
-//     messageHandle.showMessage("APP is loading user's files.");
-//     const { transUserFilesToAppDirFromTempDir } = require('./utils/updater');
-//     try {
-//       await transUserFilesToAppDirFromTempDir();
-//     } catch (error) {
-//       logger.error(error);
-//     }
-//   }
-// }
+/**
+ * 创建主窗口
+ * @param { Object } option
+ * @param { Object } option.splashWin
+ */
+async function getReadyForMainWindow(option) {
+  showSplashMessage({ splashWin: option.splashWin, message: 'Loading resources.' });
+  if (app.isPackaged) {
+    showSplashMessage({ splashWin: option.splashWin, message: "Loading user's files." });
+    await transUserFilesToAppDirFromTempDir();
+  }
+  showSplashMessage({ splashWin: option.splashWin, message: 'Launching api server.' });
+  const { port } = await apiBootstrap();
+  return {
+    apiServerUrl: `http://127.0.0.1:${port}`,
+  };
+}
 
 app.whenReady().then(async () => {
   // createSplashWindow(init);
-  createSplashWindow();
+  const splashWin = await createSplashWindow();
+  const { apiServerUrl } = await getReadyForMainWindow({ splashWin });
+  createMainWindow({ apiServerUrl, splashWin });
 });
 
 app.on('activate', () => {

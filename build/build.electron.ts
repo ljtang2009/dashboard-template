@@ -8,6 +8,8 @@ import { GenericServerOptions } from 'builder-util-runtime';
 import os from 'os';
 import fs from 'fs-extra';
 
+const processArgs = parseArgs();
+
 async function electronBuild(option?: { appPath?: string }) {
   const platform = os.platform();
 
@@ -16,7 +18,6 @@ async function electronBuild(option?: { appPath?: string }) {
     isMac: platform === 'darwin',
   };
 
-  const processArgs = parseArgs();
   const platformParam = processArgs['platform'];
   if (platformParam) {
     buildTarget.isWin = platformParam === 'windows';
@@ -96,11 +97,6 @@ async function electronBuild(option?: { appPath?: string }) {
       "!**/node_modules/.bin",
     ],
     extraFiles: [
-      // 前端编译后文件
-      // {
-      //   from: path.resolve(process.cwd(), './dist'),
-      //   to: 'dist',
-      // },
       // api静态文件
       {
         from: path.resolve(process.cwd(), './public-api'),
@@ -119,6 +115,9 @@ async function electronBuild(option?: { appPath?: string }) {
     config: options,
   })
   console.log(JSON.stringify(result));
+  return {
+    distDir
+  }
 }
 
 async function srcApiCompile(option: { distDirName: string }) {
@@ -142,18 +141,26 @@ async function srcApiCompile(option: { distDirName: string }) {
   console.log('复制electron代码')
   await fs.copy(path.resolve(process.cwd(), `./${srcELectronName}`), path.resolve(distDirPath, `./${srcELectronName}`))
 
-  console.log('混淆代码');
-  await ugly({ distDirPath })
+  // 是否加密
+  const isEncrypt = !!processArgs['encrypt'];
+  if (isEncrypt) {
+    console.log('混淆代码');
+    await ugly({ distDirPath })
 
-  console.log('编译字节码');
-  await bytenodeCompile({
-    distDirPath, filter: (distFile) => {
-      return !distFile.endsWith('launch.js') && distFile.indexOf('\\dist\\') === -1
-    }
-  });
+    console.log('编译字节码');
+    await bytenodeCompile({
+      distDirPath, filter: (distFile) => {
+        return !distFile.endsWith('launch.js') && distFile.indexOf('\\dist\\') === -1
+      },
+      isElectron: true
+    });
+  }
 
   console.log('打包electron');
-  await electronBuild({ appPath: distDirPath });
+  const electronBuildResult = await electronBuild({ appPath: distDirPath });
 
-  console.log('构建完成');
+  console.log('移除临时代码')
+  await fs.remove(distDirPath)
+
+  console.log(`构建完成。文件存于 ${electronBuildResult.distDir}`);
 })()

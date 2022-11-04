@@ -10,7 +10,7 @@ const isEncrypt = !!processArgs['encrypt'];
   const distDirName = 'dist-api';
   const srcDirName = 'src-api'
   const assetDirList = ['./dist', './public-api', './public-api-build-in']
-  await compile({
+  const result = await compile({
     distDirName,
     srcDirName,
     encrypt: isEncrypt,
@@ -20,5 +20,5 @@ const isEncrypt = !!processArgs['encrypt'];
       return !distFile.endsWith('launch.js')
     }
   })
-  console.log('构建完成');
+  console.log(`构建完成。文件存于 ${result.distDirPath}`);
 })()
