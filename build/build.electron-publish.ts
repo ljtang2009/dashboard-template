@@ -1,5 +1,7 @@
 import { compile } from '@src-utils/tsc-compile';
 import { parseArgs } from '@src-utils/command';
+import { outputFile } from '@src-utils/system-info'
+import path from 'path'
 
 const processArgs = parseArgs();
 
@@ -20,5 +22,9 @@ const isEncrypt = !!processArgs['encrypt'];
       return !distFile.endsWith('launch.js')
     }
   })
+
+  console.log('生成系统信息')
+  await outputFile({ outputPath: path.resolve(result.distDirPath, './system-info.json') })
+
   console.log(`构建完成。文件存于 ${result.distDirPath}`);
 })()

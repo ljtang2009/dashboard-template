@@ -5,7 +5,6 @@ import { HttpLoggerMiddleware } from '@src-api/core/http.logger.middleware';
 import { ResponseWrapInterceptor } from '@src-api/core/response.wrap.interceptor';
 import { ExceptionInterceptor } from '@src-api/core/exception.interceptor';
 import { Logger } from '@src-api/core/logger.service';
-import initDB from '@src-api/core/database.init';
 
 export async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -23,8 +22,6 @@ export async function bootstrap() {
     port: parseInt(process.env['API_SERVER_PORT']!, 10),
   });
   await app.listen(port);
-  // 初始化数据库
-  await initDB();
   return {
     port,
   };

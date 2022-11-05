@@ -1,14 +1,15 @@
 const { config } = require('dotenv');
 const path = require('path');
 const { pathExistsSync } = require('fs-extra');
-const envPropertiesFile = './env.properties';
-const envProperties = require(envPropertiesFile);
 const fs = require('fs-extra');
+
+const envPropertiesFile = './env.properties';
 
 /**
  * @return {Recorder<string, string>}
  */
 function initByProperties() {
+  const envProperties = require(envPropertiesFile);
   let envObj = {};
   for (const key in envProperties) {
     if (envProperties.hasOwnProperty(key)) {

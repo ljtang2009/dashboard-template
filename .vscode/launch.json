@@ -17,7 +17,7 @@
         "${workspaceFolder}/node_modules/tsconfig-paths/register"
       ],
       "args": ["${workspaceRoot}/src-api/launch.dev.ts"],
-      "env": { "TS_NODE_PROJECT": "${workspaceRoot}/src-api/tsconfig.json" },
+      "env": { "TS_NODE_PROJECT": "${workspaceRoot}/src-api/tsconfig.json", "NODE_ENV": "development" },
       "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart",
       "skipFiles": ["<node_internals>/**"],
@@ -35,7 +35,8 @@
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
-      "args": ["./src-electron/launch.js"]
+      "args": ["./src-electron/launch.js"],
+      "env": { "NODE_ENV": "development" }
     },
     {
       "name": "start:electron-publish",
@@ -50,7 +51,7 @@
         "${workspaceFolder}/node_modules/tsconfig-paths/register"
       ],
       "args": ["${workspaceRoot}/src-electron-publish/launch.dev.ts"],
-      "env": { "TS_NODE_PROJECT": "${workspaceRoot}/src-electron-publish/tsconfig.json" },
+      "env": { "TS_NODE_PROJECT": "${workspaceRoot}/src-api/tsconfig.json", "NODE_ENV": "development" },
       "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart",
       "skipFiles": ["<node_internals>/**"],

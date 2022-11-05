@@ -72,7 +72,9 @@ dashboard 应用模板。
 
 ## 反编译 asar
 
-`npm run unpack:electron`
+`npm run unpack:electron asar-path=\absolute-path.asar`
+
+asar-path 配置 asar 文件绝对路径，非必填。默认为 ./dist-electron/windows/win-unpacked/resources/app.asar
 
 反编译后的文件存于`unpacked-electron`中。
 
@@ -94,6 +96,31 @@ dashboard 应用模板。
 
 加密目的[参考](#encrypt)。
 
+## 解密 sqlite
+
+`npm run decrypt-sqlite srcDBFilePath=源文件绝对路径 key=密码 distDBFilePath=结文件绝对路径`
+
+key 一般为环境变量的 SQLITE_ENCRYPT_KEY.
+
+distDBFilePath 可以为空。
+
+示例: `npm run decrypt-sqlite srcDBFilePath=D:\Projects\dashboard-template\db\main.db key=20221105 distDBFilePath=D:\Projects\dashboard-template\db\main_2.db`
+
+## 加载 bytenode 模块
+
+`npm run load-bytenode bytenodeFilePath=模块文件绝对路径`
+
+如果加载失败，原因可能是编译模块的 nodejs 版本和环境和 加载模块的 nodejs 版本和环境不一致。
+编译模块的 nodejs 版本和环境信息在 ./system-info.json
+
+示例: `npm run load-bytenode bytenodeFilePath=D:\Projects\dashboard-dist-api\src-utils\env.properties.jsc`
+
+### 在 electron 环境加载 bytenode 模块
+
+`npm run load-bytenode:electron bytenodeFilePath=模块文件绝对路径`
+
+如果 bytenode 模块编译的参数理有 electron， 则需要在 electron 中加载。
+
 ## 环境变量
 
 所有环境变量都存于 [.env.default](./.env.default) 和 [.env.local](./.env.local) 中, 后者会覆盖前者。
@@ -109,6 +136,7 @@ dashboard 应用模板。
 | <span id="API_SERVER_PORT">API_SERVER_PORT</span>                         | API 服务端口              | 8096                                           |
 | <span id="ELECTRON_UPDATE_SERVER_PORT">ELECTRON_UPDATE_SERVER_PORT</span> | electron 升级服务端口     | 8084                                           |
 | DB_FILE_Path                                                              | 数据库文件路径            | `"./db/main.db"`                               |
+| SQLITE_ENCRYPT_KEY                                                        | sqlite 加密 key           | "20221105"                                     |
 
 ## <span id="t2j">编译 typescript to javascript 目的</span>
 

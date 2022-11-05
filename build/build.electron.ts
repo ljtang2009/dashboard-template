@@ -7,6 +7,7 @@ import { parseArgs } from '@src-utils/command';
 import { GenericServerOptions } from 'builder-util-runtime';
 import os from 'os';
 import fs from 'fs-extra';
+import { outputFile } from '@src-utils/system-info'
 
 const processArgs = parseArgs();
 
@@ -72,30 +73,31 @@ async function electronBuild(option?: { appPath?: string }) {
       darkModeSupport: true,
       publish: { ...publishServerOptions, url: publishServerOptions.url + '/mac' },
     },
+    // 因为使用了临时代码，所以不需要在编译的时候过滤files了
     // files 会按顺序过滤
-    files: [
-      '!**/*',
+    // files: [
+    //   '!**/*',
 
-      '**/dist/**/*',
-      '**/src-api/**/*',
-      '**/src-electron/**/*',
-      '**/src-utils/**/*',
+    //   '**/dist/**/*',
+    //   '**/src-api/**/*',
+    //   '**/src-electron/**/*',
+    //   '**/src-utils/**/*',
 
-      '!**/*.map',
-      '!**/tsconfig.tsbuildinfo',
-      '!**/.log/**/*',
+    //   '!**/*.map',
+    //   '!**/tsconfig.tsbuildinfo',
+    //   '!**/.log/**/*',
 
-      "!**/.history/**/*",
-      "!**/unpacked-electron/**/*",
-      "!**/dist-api/**/*",
-      "!**/dist-electron-publish/**/*",
+    //   "!**/.history/**/*",
+    //   "!**/unpacked-electron/**/*",
+    //   "!**/dist-api/**/*",
+    //   "!**/dist-electron-publish/**/*",
 
-      '**/node_modules/**/*',
-      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
-      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
-      "!**/node_modules/*.d.ts",
-      "!**/node_modules/.bin",
-    ],
+    //   '**/node_modules/**/*',
+    //   "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+    //   "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+    //   "!**/node_modules/*.d.ts",
+    //   "!**/node_modules/.bin",
+    // ],
     extraFiles: [
       // api静态文件
       {
@@ -155,6 +157,10 @@ async function srcApiCompile(option: { distDirName: string }) {
       isElectron: true
     });
   }
+
+  console.log('生成系统信息')
+  const systemInfoOutputPath = path.resolve(distDirPath, './system-info.json')
+  await outputFile({ outputPath: systemInfoOutputPath })
 
   console.log('打包electron');
   const electronBuildResult = await electronBuild({ appPath: distDirPath });
