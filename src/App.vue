@@ -3,7 +3,7 @@
     :date-locale="language.dateLocale" abstract>
     <n-loading-bar-provider>
       <n-message-provider>
-        <app-config />
+        <app-config v-if="isDev" />
         <router-view />
       </n-message-provider>
     </n-loading-bar-provider>
@@ -17,6 +17,8 @@ import AppConfig from '@/components/AppConfig/AppConfig.vue';
 import useLanguageStore from '@/store/appConfig/language'
 import { setI18nLanguage } from '@/i18n'
 import { getThemeOverrides, getTheme } from '@/utils/themeConfigProvider';
+
+const isDev = process.env['NODE_ENV'] === 'development'
 
 const themeOverrides = computed(getThemeOverrides)
 

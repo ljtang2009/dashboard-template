@@ -14,6 +14,7 @@ export default {
     name: '名稱',
     logo: '商標',
     dragOrClickToUpload: '點擊或者拖動文件到該區域來上傳',
+    customizable: '可自定義',
     fileFormatError: ({ list }: { list: ListInterpolation }) => {
       return `只能上傳${localeUtil.joinOrList(list)}格式的圖片文件，請重新上傳`;
     },

@@ -1,13 +1,21 @@
 <template>
   <div ref="userLayout" class="user-layout">
-    <div :class="boxClass">
+    <div class="toolbar">
+      <language-selector v-if="languageStore.canCustomLanguage === 'Y'" />
+    </div>
+    <!-- <div :class="boxClass"> -->
+    <div class="box">
       <n-space align="center" justify="center" class="title">
-        <img class="logo" :src="`/api/admin/logo/getStream?${productStore.logoTimestamp}`" />
-        <n-text class="product-name" strong>{{ productStore.productName }}</n-text>
+        <div class="title-item">
+          <img class="logo" :src="`/api/admin/logo/getStream?${productStore.logoTimestamp}`" />
+        </div>
+        <div class="title-item">
+          <n-text class="product-name" strong>{{ productStore.productName }}</n-text>
+        </div>
       </n-space>
       <router-view />
     </div>
-    <component :is="cssEffect"></component>
+    <!-- <component :is="cssEffect"></component> -->
   </div>
 </template>
 <script lang="ts">
@@ -16,16 +24,23 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import { ref, onMounted, shallowRef } from 'vue'
+import {
+  ref,
+  // onMounted,
+  // shallowRef
+} from 'vue'
 import useProductStore from '@/store/appConfig/product'
 import useThemeStore from '@/store/appConfig/theme'
+import useLanguageStore from '@/store/appConfig/language'
+import LanguageSelector from '@/components/LanguageSelector/index.vue'
 
 const productStore = useProductStore()
 const themeStore = useThemeStore()
+const languageStore = useLanguageStore()
 
 const userLayout = ref(null)
 const boxClass = ref<Array<string>>([])
-const cssEffect = shallowRef()
+// const cssEffect = shallowRef()
 
 function setBoxClass() {
   boxClass.value = [
@@ -39,12 +54,12 @@ themeStore.$subscribe((_mutation, _state) => {
   setBoxClass()
 })
 
-onMounted(() => {
-  const cssEffectComponentName = 'FluidSimulation'
-  import(`@/components/CSSEffect/${cssEffectComponentName}/index.vue`).then(CSSEffectComponent => {
-    cssEffect.value = CSSEffectComponent.default
-  })
-})
+// onMounted(() => {
+//   const cssEffectComponentName = 'FluidSimulation'
+//   import(`@/components/CSSEffect/${cssEffectComponentName}/index.vue`).then(CSSEffectComponent => {
+//     cssEffect.value = CSSEffectComponent.default
+//   })
+// })
 
 </script>
 <style lang="less" scoped>
@@ -60,6 +75,13 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
 
+  .toolbar {
+    position: fixed;
+    z-index: 2;
+    top: 2rem;
+    right: 2rem;
+  }
+
   .box {
     width: 18rem;
     padding: 2rem;
@@ -67,9 +89,14 @@ onMounted(() => {
     backdrop-filter: blur(0.5rem);
     position: fixed;
     z-index: 2;
+    box-shadow: 0px 0px 8px 4px #999999;
 
     .title {
       padding-bottom: 2rem;
+
+      .title-item {
+        line-height: 1;
+      }
 
       .logo {
         height: 3rem;
@@ -81,13 +108,13 @@ onMounted(() => {
     }
   }
 
-  .light-box {
-    background-color: rgba(255, 255, 255, .8);
-  }
+  // .light-box {
+  //   background-color: rgba(255, 255, 255, .8);
+  // }
 
-  .dark-box {
-    background-color: rgba(0, 0, 0, .8);
-  }
+  // .dark-box {
+  //   background-color: rgba(0, 0, 0, .8);
+  // }
 
 }
 </style>

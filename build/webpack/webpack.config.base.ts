@@ -112,6 +112,7 @@ const config: Configuration = {
     new DefinePlugin({
       __VUE_OPTIONS_API__: JSON.stringify(true),
       __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
+      'process.env.NODE_ENV': JSON.stringify(process.env['NODE_ENV']),
     }),
     new PrintDatePlugin(),
     new CopyPlugin({

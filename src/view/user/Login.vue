@@ -13,11 +13,11 @@
         <n-checkbox>
           自动登录
         </n-checkbox>
-        <n-text type="primary" style="cursor: pointer;">注册账户</n-text>
+        <n-button text type="primary" @click="router.push('register')">注册账户</n-button>
       </n-space>
     </div>
     <n-button type="primary" block :loading="loading" @click="submit">
-      确定
+      登录
     </n-button>
   </n-space>
 </template>
@@ -29,8 +29,10 @@ export default {
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { FormInst } from 'naive-ui'
+import { useRouter } from 'vue-router'
 import { login } from '@/api/user/user'
 
+const router = useRouter();
 const formRef = ref<FormInst | null>(null)
 const loading = ref(false)
 
@@ -73,4 +75,5 @@ function submit() {
     }
   })
 }
+
 </script>

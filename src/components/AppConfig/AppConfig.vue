@@ -1,7 +1,7 @@
 <template>
   <div>
     <drag-handle @tap="visible = !visible" />
-    <n-drawer v-model:show="visible" display-directive="show">
+    <n-drawer v-model:show="visible" display-directive="show" :default-width="300">
       <n-drawer-content>
         <template #header>{{$t('appConfig.systemConfig')}}</template>
         <template #footer>

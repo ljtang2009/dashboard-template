@@ -9,6 +9,7 @@ function store(appConfig: typeof appConfigDefault) {
   const languageStore = useLanguageStore();
   languageStore.$patch((state) => {
     state.languageId = appConfig.languageId;
+    state.canCustomLanguage = appConfig.canCustomLanguage;
   });
   const primaryColorStore = usePrimaryColorStore();
   primaryColorStore.$patch((state) => {
@@ -30,7 +31,7 @@ export async function init() {
   let appConfigDB;
   try {
     appConfigDB = await getAppConfig();
-  } catch (err) {}
+  } catch (err) { }
   if (appConfigDB) {
     appConfigDB = { ...appConfigDefault, ...appConfigDB };
     store(appConfigDB);

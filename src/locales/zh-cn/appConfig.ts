@@ -8,6 +8,7 @@ export default {
       saveSuccessfully: '@:common.save@:common.successfully',
       resetSuccessfully: '@:common.reset@:common.successfully',
     },
+    customizable: '@:common.customizable',
     modules: {
       primaryColor: {
         title: '主色',

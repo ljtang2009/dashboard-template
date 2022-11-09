@@ -1,10 +1,13 @@
 <template>
   <n-space vertical>
-    <div>
+    <n-space justify="space-between">
       <n-text strong>
         <slot name="title"></slot>
       </n-text>
-    </div>
+      <div>
+        <slot name="right-title"></slot>
+      </div>
+    </n-space>
     <div>
       <slot name="content"></slot>
     </div>

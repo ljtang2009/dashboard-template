@@ -14,6 +14,7 @@ export default {
     name: 'name',
     logo: 'logo',
     dragOrClickToUpload: 'Click or drag files to this area to upload.',
+    customizable: 'customizable',
     fileFormatError: ({ list }: { list: ListInterpolation }) => {
       return `You can only upload files in ${localeUtil.joinOrList(list)} format, please upload again.`;
     },

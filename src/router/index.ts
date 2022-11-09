@@ -5,14 +5,14 @@ const routes = [
   {
     path: '/',
     name: 'Root',
-    redirect: '/login',
+    redirect: '/users/login',
   },
   {
     path: '/users',
     component: () => import('@/layout/UserLayout.vue'),
     children: [
       {
-        path: '/login',
+        path: 'login',
         name: 'Login',
         component: () => import('@/view/user/Login.vue'),
         meta: {
@@ -20,7 +20,7 @@ const routes = [
         },
       },
       {
-        path: '/register',
+        path: 'register',
         name: 'Register',
         component: () => import('@/view/user/Register.vue'),
         meta: {
@@ -28,7 +28,7 @@ const routes = [
         },
       },
       {
-        path: '/page3',
+        path: 'page3',
         name: 'Page3',
         component: () => import('@/view/user/Page3.vue'),
       },

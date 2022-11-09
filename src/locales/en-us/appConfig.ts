@@ -8,6 +8,7 @@ export default {
       saveSuccessfully: '@.capitalize:common.save @.capitalize:common.successfully .',
       resetSuccessfully: '@.capitalize:common.reset @.capitalize:common.successfully .',
     },
+    customizable: '@.capitalize:common.customizable',
     modules: {
       primaryColor: {
         title: 'Primary Color',

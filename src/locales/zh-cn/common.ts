@@ -14,6 +14,7 @@ export default {
     name: '名称',
     logo: '商标',
     dragOrClickToUpload: '点击或者拖动文件到该区域来上传',
+    customizable: '可自定义',
     fileFormatError: ({ list }: { list: ListInterpolation }) => {
       return `只能上传${localeUtil.joinOrList(list)}格式的图片文件，请重新上传`;
     },

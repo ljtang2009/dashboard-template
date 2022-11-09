@@ -4,6 +4,7 @@ import languages from '@/config/languages';
 
 export default defineStore('language', () => {
   const languageId = ref<string>('');
+  const canCustomLanguage = ref<string>('Y');
   const language = computed(() => {
     let result = languages[0];
     for (const item of languages) {
@@ -24,5 +25,9 @@ export default defineStore('language', () => {
      * 语言对象
      */
     language,
+    /**
+     * 是否可以自定义语言
+     */
+    canCustomLanguage
   };
 });
