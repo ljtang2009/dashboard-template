@@ -14,6 +14,14 @@ export default defineStore('theme', () => {
     return result;
   });
 
+  /**
+   * 初始化
+   * @param appConfig
+   */
+  const init = (appConfig: { themeId: string }) => {
+    themeId.value = appConfig.themeId
+  }
+
   return {
     /**
      * 主题号
@@ -23,5 +31,6 @@ export default defineStore('theme', () => {
      * 是否是暗主题
      */
     isDark,
+    init,
   };
 });

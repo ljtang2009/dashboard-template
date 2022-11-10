@@ -113,6 +113,7 @@ const config: Configuration = {
       __VUE_OPTIONS_API__: JSON.stringify(true),
       __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
       'process.env.NODE_ENV': JSON.stringify(process.env['NODE_ENV']),
+      'process.env.STORAGE_ENCRYPT_KEY': JSON.stringify(process.env['STORAGE_ENCRYPT_KEY']),
     }),
     new PrintDatePlugin(),
     new CopyPlugin({

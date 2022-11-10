@@ -137,6 +137,7 @@ distDBFilePath 可以为空。
 | <span id="ELECTRON_UPDATE_SERVER_PORT">ELECTRON_UPDATE_SERVER_PORT</span> | electron 升级服务端口     | 8084                                           |
 | DB_FILE_Path                                                              | 数据库文件路径            | `"./db/main.db"`                               |
 | SQLITE_ENCRYPT_KEY                                                        | sqlite 加密 key           | "20221105"                                     |
+| STORAGE_ENCRYPT_KEY                                                       | storage 加密 key          | 20221110                                       |
 
 ## <span id="t2j">编译 typescript to javascript 目的</span>
 

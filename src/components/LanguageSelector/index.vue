@@ -43,10 +43,7 @@ const options = languages.map(item => {
 })
 
 function handleSelect(key: string) {
-  languageStore.$patch((state) => {
-    state.languageId = key
-  })
-  // TODO 保存配置信息
+  languageStore.saveStorage({ languageId: key })
 }
 
 </script>

@@ -22,6 +22,16 @@ export default defineStore('primaryColor', () => {
     return result;
   });
 
+  /**
+   * 初始化
+   * @param appConfig
+   */
+  const init = (appConfig: { primaryColorId: string, isCustomPrimaryColor: string, customPrimaryColor: string }) => {
+    primaryColorId.value = appConfig.primaryColorId
+    isCustomPrimaryColor.value = appConfig.isCustomPrimaryColor
+    customPrimaryColor.value = appConfig.customPrimaryColor
+  }
+
   return {
     /**
      * 主题色号
@@ -39,5 +49,6 @@ export default defineStore('primaryColor', () => {
      * 主题色值
      */
     primaryColor,
+    init,
   };
 });

@@ -1,3 +1,4 @@
+import { getItem as getItemStorage, setItem as setItemStorage } from '@/utils/clientStorage'
 import { get as getAppConfig } from '@/api/admin/app-config';
 import appConfigDefault from '@/config/appConfigDefault';
 import useLanguageStore from '@/store/appConfig/language';
@@ -7,24 +8,27 @@ import useProductStore from '@/store/appConfig/product';
 
 function store(appConfig: typeof appConfigDefault) {
   const languageStore = useLanguageStore();
-  languageStore.$patch((state) => {
-    state.languageId = appConfig.languageId;
-    state.canCustomLanguage = appConfig.canCustomLanguage;
-  });
+  languageStore.init(appConfig)
   const primaryColorStore = usePrimaryColorStore();
-  primaryColorStore.$patch((state) => {
-    state.isCustomPrimaryColor = appConfig.isCustomPrimaryColor;
-    state.primaryColorId = appConfig.primaryColorId;
-    state.customPrimaryColor = appConfig.customPrimaryColor;
-  });
+  primaryColorStore.init(appConfig)
   const themeStore = useThemeStore();
-  themeStore.$patch((state) => {
-    state.themeId = appConfig.themeId;
-  });
+  themeStore.init(appConfig)
   const productStore = useProductStore();
-  productStore.$patch((state) => {
-    state.productName = appConfig.productName;
-  });
+  productStore.init(appConfig)
+}
+
+const storageKey = 'app_config'
+
+function getAppConfigStorage() {
+  let storageString = getItemStorage({ key: storageKey })
+  let result
+  if (storageString !== null) {
+    result = JSON.parse(storageString)
+  }
+  else {
+    result = {}
+  }
+  return result;
 }
 
 export async function init() {
@@ -33,7 +37,29 @@ export async function init() {
     appConfigDB = await getAppConfig();
   } catch (err) { }
   if (appConfigDB) {
-    appConfigDB = { ...appConfigDefault, ...appConfigDB };
+    const appConfigStorage = getAppConfigStorage()
+    appConfigDB = { ...appConfigDefault, ...appConfigDB, ...appConfigStorage };
     store(appConfigDB);
   }
+}
+
+/**
+ * 保存到 storage
+ * @param option
+ */
+export function saveStorage(option: Record<string, string>) {
+  let storageString = getItemStorage({ key: storageKey })
+  let storageObj
+  if (storageString) {
+    storageObj = JSON.parse(storageString)
+  }
+  else {
+    storageObj = {}
+  }
+  for (const key in option) {
+    if (option.hasOwnProperty(key)) {
+      storageObj[key] = option[key]
+    }
+  }
+  setItemStorage({ key: storageKey, value: JSON.stringify(storageObj) })
 }
